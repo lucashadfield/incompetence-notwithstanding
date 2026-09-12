@@ -1,0 +1,35 @@
+/* ── homepage hero ────────────────────────────────────────────────────── */
+.hero {
+  padding-top: clamp(2rem, 4.5vw, 3.5rem);
+  padding-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+  border-bottom: 1px solid var(--rule);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: var(--t-display);
+  line-height: 1.08;
+  letter-spacing: var(--tracking-display);
+  max-width: 31ch;
+  text-wrap: balance;
+}
+
+.hero__dim {
+  color: var(--ink-3);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: clamp(1.1rem, 2vw, 1.6rem);
+}
+.hero__meta a {
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 4px;
+}
+
+/* the tiles start straight after the hero — no "Latest" section heading */

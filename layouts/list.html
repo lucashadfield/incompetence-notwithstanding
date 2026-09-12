@@ -1,0 +1,19 @@
+{{ define "main" }}
+<section class="wrap section section--top">
+  <header class="list-head">
+    <p class="u-micro">{{ if eq .Kind "term" }}Tag{{ else }}Section{{ end }}</p>
+    <h1 class="list-head__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="post__standfirst">{{ . }}</p>{{ end }}
+    {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+    <p class="u-micro list-head__count">{{ len .Pages }} post{{ if ne (len .Pages) 1 }}s{{ end }}</p>
+    <hr class="rule rule--accent">
+  </header>
+
+  <div class="tiles">
+    {{- $total := len .Pages }}
+    {{- range $i, $p := .Pages }}
+    {{ partial "tile.html" (dict "page" $p "variant" "tile" "index" (sub $total $i)) }}
+    {{- end }}
+  </div>
+</section>
+{{ end }}

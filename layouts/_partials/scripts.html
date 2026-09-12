@@ -1,0 +1,32 @@
+{{- $fuse := resources.Get "js/vendor/fuse.basic.min.js" }}
+{{- $site := resources.Get "js/site.js" }}
+{{- if hugo.IsProduction }}
+  {{- $fuse = $fuse | fingerprint }}
+  {{- $site = $site | minify | fingerprint }}
+{{- end }}
+{{- $index := "" }}
+{{- with site.Home.OutputFormats.Get "json" }}{{ $index = .RelPermalink }}{{ end }}
+{{- /* Hugo lower-cases TOML param keys, so map them back to Fuse's camelCase
+       explicitly — getting this wrong silently disables ignoreLocation and
+       makes deep-in-the-body matches impossible to find. */}}
+{{- $o := site.Params.fuseOpts | default dict }}
+{{- $fuseOpts := dict
+    "isCaseSensitive" (index $o "iscasesensitive" | default false)
+    "shouldSort" true
+    "ignoreLocation" true
+    "includeScore" false
+    "threshold" (index $o "threshold" | default 0.35)
+    "minMatchCharLength" (index $o "minmatchcharlength" | default 2)
+    "keys" (slice
+      (dict "name" "title" "weight" 3)
+      (dict "name" "summary" "weight" 2)
+      (dict "name" "content" "weight" 1))
+}}
+<script>
+  window.__SITE__ = {
+    searchIndex: {{ $index }},
+    fuseURL: {{ $fuse.RelPermalink }},
+    fuseOpts: {{ $fuseOpts | jsonify | safeJS }}
+  };
+</script>
+<script src="{{ $site.RelPermalink }}" defer></script>

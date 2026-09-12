@@ -1,0 +1,32 @@
+{{- /*
+  Cover image for a page. Raster only (PNG / JPG / WebP): resized to webp with
+  a 2-step srcset. A page without a cover gets a flat pastel block in one of
+  five tints, keyed off the title, so the grid never breaks.
+
+  Params: page, variant (hero|tile|mini), loading (lazy|eager)
+*/ -}}
+{{- $page := .page -}}
+{{- $variant := .variant | default "tile" -}}
+{{- $loading := .loading | default "lazy" -}}
+{{- $alt := printf "%s — cover" $page.Title -}}
+{{- with $page.Params.cover }}{{ with .alt }}{{ $alt = . }}{{ end }}{{ end -}}
+{{- $res := partial "func/cover_resource.html" $page -}}
+{{- $tint := mod (hash.FNV32a (printf "%v" $page.Title)) 5 -}}
+<figure class="poster poster--{{ $variant }} tint-{{ $tint }}">
+{{- if $res }}
+  {{- /* the hero is edge-to-edge at every width, so its sizes hint is simply
+         100vw; 1600px covers a 2x 800px-wide viewport and everything above it
+         gets cropped by the 300px max-height anyway */}}
+  {{- $w := 1600 }}{{ $sizes := "(min-width: 1100px) 1100px, 100vw" }}
+  {{- if eq $variant "hero" }}{{ $w = 1600 }}{{ $sizes = "100vw" }}{{ end }}
+  {{- if eq $variant "mini" }}{{ $w = 800 }}{{ $sizes = "(min-width: 700px) 340px, 50vw" }}{{ end }}
+  {{- $small := $res.Resize (printf "%dx webp q82" (div $w 2)) }}
+  {{- $large := $res.Resize (printf "%dx webp q82" $w) }}
+  <img class="poster__img" src="{{ $large.RelPermalink }}"
+       srcset="{{ $small.RelPermalink }} {{ $small.Width }}w, {{ $large.RelPermalink }} {{ $large.Width }}w"
+       sizes="{{ $sizes }}" width="{{ $large.Width }}" height="{{ $large.Height }}"
+       alt="{{ $alt }}" loading="{{ $loading }}" decoding="async">
+{{- else }}
+  <div class="poster__empty dither"><span class="u-micro">No cover</span></div>
+{{- end }}
+</figure>

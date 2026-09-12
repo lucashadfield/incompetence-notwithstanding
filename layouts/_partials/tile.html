@@ -1,0 +1,23 @@
+{{- $p := .page -}}
+{{- $variant := .variant | default "tile" -}}
+{{- $n := .index -}}
+<article class="tile tile--{{ $variant }} tint-{{ mod (hash.FNV32a (printf "%v" $p.Title)) 5 }}">
+  <a class="tile__link" href="{{ $p.RelPermalink }}" aria-label="{{ $p.Title }}">
+    <div class="tile__media">
+      {{ partial "poster.html" (dict "page" $p "variant" (cond (eq $variant "feature") "hero" "tile") "loading" (.loading | default "lazy")) }}
+      {{- with $n }}<span class="tile__num u-micro">{{ printf "%02d" . }}</span>{{ end }}
+    </div>
+    <div class="tile__body">
+      <p class="tile__meta u-micro">
+        <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format site.Params.dateFormat }}</time>
+        {{- with $p.Params.tags }}{{ range first 3 . }}<span class="dot" aria-hidden="true"></span><span>{{ partial "func/tagname.html" . }}</span>{{ end }}{{ end }}
+        {{- if site.Params.showReadingTime }}<span class="dot" aria-hidden="true"></span><span>{{ $p.ReadingTime }} min</span>{{ end }}
+      </p>
+      <h3 class="tile__title">{{ $p.Title }}</h3>
+      {{- with ($p.Description | default ($p.Summary | plainify | truncate 150)) }}
+      <p class="tile__desc">{{ . }}</p>
+      {{- end }}
+      <span class="tile__cta u-micro">Read {{ partial "icon.html" "arrow" }}</span>
+    </div>
+  </a>
+</article>

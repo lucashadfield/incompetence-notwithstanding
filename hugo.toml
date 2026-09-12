@@ -1,0 +1,104 @@
+# ── THE ONE LINE TO CHANGE WHEN THE DOMAIN IS UP ────────────────────────────
+# Single source of truth. Canonicals, og:url, RSS links, the sitemap and every
+# absolute asset URL derive from this; nothing else in the repo hardcodes a
+# host. `hugo server` overrides it with --baseURL (see README), and a one-off
+# production build can override it too: hugo -b "https://example.com/"
+baseURL = "http://pi-server.axolotl-major.ts.net:1314/"
+# ────────────────────────────────────────────────────────────────────────────
+locale = 'en-us'
+title = 'Incompetence Notwithstanding'
+enableRobotsTXT = true
+summaryLength = 30
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+# tags only — no empty /categories/ page
+[taxonomies]
+  tag = "tags"
+
+[params]
+  # ── identity ────────────────────────────────────────────────────────────────
+  description = "Notes on language models, the things built with them, and what breaks."
+  author = "Lucas Hadfield"
+  since = 2026
+  # homepage statement, set large
+  intro = "Writing about wheedling LLMs, mostly"
+  # ── behaviour ───────────────────────────────────────────────────────────────
+  mainSections = ["posts"]
+  dateFormat = "2 Jan 2006"
+  showReadingTime = true
+  showPostNav = true
+  # ── tag display names ───────────────────────────────────────────────────────
+  # Hugo title-cases taxonomy terms, which mangles acronyms ("llms" → "Llms").
+  # Anything listed here wins; everything else falls back to title-casing.
+  # Keys must be the lower-cased tag: Hugo lower-cases TOML keys regardless.
+  [params.tagNames]
+    llms = "LLMs"
+    rl = "RL"
+    ml = "ML"
+  # ── elsewhere: rendered by the {{< social >}} shortcode ─────────────────────
+  # tint is one of the five cover-art palette families; it is the hard offset
+  # shadow on hover. No brand colours — four foreign palettes would swamp the page.
+  [[params.social]]
+    name = "Email"
+    url = "mailto:lucas@hadfield.dev"
+    icon = "mail"
+    tint = "sage"
+  [[params.social]]
+    name = "GitHub"
+    url = "https://github.com/lucashadfield"
+    icon = "github"
+    tint = "stone"
+  [[params.social]]
+    name = "LinkedIn"
+    url = "https://linkedin.com/in/lucashadfield"
+    icon = "linkedin"
+    tint = "mist"
+  [[params.social]]
+    name = "Letterboxd"
+    url = "https://letterboxd.com/lhad"
+    icon = "letterboxd"
+    tint = "peach"
+  # ── search (fuse.js) ────────────────────────────────────────────────────────
+  [params.fuseOpts]
+    isCaseSensitive = false
+    shouldSort = true
+    threshold = 0.35
+    minMatchCharLength = 2
+    ignoreLocation = true
+    keys = ["title", "summary", "content"]
+
+[markup]
+  [markup.highlight]
+    noClasses = false
+    lineNumbersInTable = false
+    tabWidth = 2
+  [markup.goldmark.renderer]
+    unsafe = true
+    hardWraps = true
+
+# Keep original cover.png files out of public/: every reference goes through a
+# resized derivative, and unreferenced resources are not published. Covers both
+# posts and /about/, which uses the same page-bundle cover convention.
+[[cascade]]
+  [cascade.build]
+    publishResources = false
+  [cascade.target]
+    # `/about/**` does NOT match `/about/` — `**` needs a following segment, so
+    # a root-level leaf bundle has to be named without one.
+    path = "{/posts/**,/about}"
+
+[menu]
+  [[menu.main]]
+    name = "Archive"
+    url = "/archives/"
+    weight = 20
+  [[menu.main]]
+    name = "Tags"
+    url = "/tags/"
+    weight = 30
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 40

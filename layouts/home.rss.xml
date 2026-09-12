@@ -1,0 +1,53 @@
+{{- /*
+  Home feed. Overrides Hugo's built-in RSS for three reasons:
+    1. the default enumerates every regular page, so About / Archive / Search
+       were showing up as feed items;
+    2. it ships only .Description, throwing away the whole post;
+    3. it carries no art, which on this site is most of the point.
+  Posts only, full content, cover as both an <enclosure> and the lead image.
+*/ -}}
+{{- $pages := where site.RegularPages "Section" "in" site.Params.mainSections -}}
+{{- $limit := site.Config.Services.RSS.Limit -}}
+{{- if ge $limit 1 }}{{ $pages = $pages | first $limit }}{{ end -}}
+{{- $base := strings.TrimSuffix "/" site.BaseURL -}}
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>{{ site.Title }}</title>
+    <link>{{ site.Home.Permalink }}</link>
+    <description>{{ site.Params.description }}</description>
+    <generator>Hugo</generator>
+    <language>{{ site.Language.Locale | default site.Language.Lang }}</language>
+    {{- with site.Params.author }}
+    <managingEditor>{{ . }}</managingEditor>
+    <webMaster>{{ . }}</webMaster>
+    <copyright>© {{ site.Params.since }}–{{ now.Format "2006" }} {{ . }}</copyright>
+    {{- end }}
+    {{- with $pages }}
+    <lastBuildDate>{{ (index . 0).Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</lastBuildDate>
+    {{- end }}
+    <atom:link href="{{ .Permalink }}" rel="self" type="application/rss+xml" />
+    {{- range $pages }}
+    {{- $cover := partial "func/cover_resource.html" . }}
+    {{- $card := "" }}
+    {{- with $cover }}{{ $card = .Fill "1200x630 jpg q85 Center" }}{{ end }}
+    {{- /* root-relative asset URLs are meaningless in a feed reader */}}
+    {{- $body := .Content | replaceRE `(src|href)="(/[^/][^"]*)"` (printf `$1="%s$2"` $base) }}
+    <item>
+      <title>{{ .Title }}</title>
+      <link>{{ .Permalink }}</link>
+      <guid isPermaLink="true">{{ .Permalink }}</guid>
+      <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
+      {{- with site.Params.author }}<author>{{ . }}</author>{{ end }}
+      {{- range .Params.tags }}
+      <category>{{ . }}</category>
+      {{- end }}
+      <description>{{ .Description | default (.Summary | plainify) | chomp }}</description>
+      {{- with $card }}
+      <enclosure url="{{ .Permalink }}" length="{{ len .Content }}" type="image/jpeg" />
+      {{- end }}
+      <content:encoded><![CDATA[{{ with $card }}<p><img src="{{ .Permalink }}" alt="{{ $.Title }}" width="{{ .Width }}" height="{{ .Height }}"></p>{{ end }}{{ $body }}]]></content:encoded>
+    </item>
+    {{- end }}
+  </channel>
+</rss>

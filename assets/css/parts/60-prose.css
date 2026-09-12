@@ -1,0 +1,142 @@
+/* ── long-form typography ─────────────────────────────────────────────── */
+.prose {
+  max-width: var(--measure);
+  padding-block: clamp(0.5rem, 1vw, 1rem) clamp(2rem, 4vw, 3rem);
+  color: var(--ink);
+}
+
+.prose > * + * { margin-top: 1.35em; }
+
+.prose p { line-height: 1.72; }
+.prose > p:first-child { margin-top: 0; }
+
+.prose h2,
+.prose h3,
+.prose h4 { position: relative; scroll-margin-top: calc(var(--header-h) + 2rem); }
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--t-h2);
+  line-height: 1.15;
+  letter-spacing: -0.028em;
+  margin-top: 2.4em;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--rule);
+}
+/* the header's accent rule already separates the body — no doubled rule */
+.prose > h2:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+
+.prose h3 {
+  font-size: var(--t-h3);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-top: 2em;
+}
+.prose h4 {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-2);
+  margin-top: 1.9em;
+}
+
+.h-anchor::after { content: "#"; }
+.h-anchor {
+  position: absolute;
+  left: -1.1em;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--accent);
+  opacity: 0;
+  font-family: var(--font-sans);
+  font-size: 0.75em;
+  transition: opacity 0.25s var(--ease);
+}
+.prose h2 .h-anchor { top: auto; bottom: 0.15em; transform: none; }
+.prose :is(h2, h3, h4):hover .h-anchor { opacity: 1; }
+@media (max-width: 900px) { .h-anchor { display: none; } }
+
+.prose a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--accent);
+  transition: background 0.25s var(--ease), color 0.25s var(--ease);
+}
+.prose a:hover { background: var(--wash); color: var(--accent); }
+
+.prose strong { font-weight: 600; }
+.prose em { font-style: italic; }
+
+.prose ul, .prose ol { padding-left: 1.35em; }
+.prose li { margin-block: 0.4em; padding-left: 0.2em; }
+.prose li::marker { color: var(--accent); font-size: 0.9em; }
+.prose ol li::marker { font-variant-numeric: tabular-nums; font-weight: 600; font-size: 0.85em; }
+.prose li > ul, .prose li > ol { margin-top: 0.4em; }
+
+.prose blockquote {
+  margin-block: 2em;
+  padding: 1.1rem 1.35rem;
+  border: 1px solid var(--rule-strong);
+  border-left: var(--pixel) solid var(--accent);
+  background: var(--paper-raised);
+  font-size: clamp(1.05rem, 1rem + 0.35vw, 1.2rem);
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+.prose blockquote p + p { margin-top: 0.6em; }
+
+.prose hr {
+  border: 0;
+  height: 1px;
+  background: var(--rule);
+  margin-block: 2.75em;
+}
+
+/* tables — poster credit block styling */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  margin-block: 2em;
+}
+.prose thead th {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-micro);
+  color: var(--ink-3);
+  text-align: left;
+  padding: 0 0.9rem 0.7rem 0;
+  border-bottom: 1px solid var(--rule-strong);
+}
+.prose tbody td {
+  padding: 0.75rem 0.9rem 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.prose tbody tr:hover td { background: color-mix(in srgb, var(--wash) 55%, transparent); }
+.prose tbody td:first-child { font-weight: 500; }
+.prose table :is(td, th):last-child { padding-right: 0; }
+
+/* figures */
+.fig { margin-block: 2.25em; }
+.fig img {
+  width: 100%;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--sunken);
+}
+.fig figcaption { margin-top: 0.7rem; color: var(--ink-3); }
+
+/* footnotes */
+.footnotes { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 0.9rem; color: var(--ink-2); }
+.footnotes ol { padding-left: 1.2em; }
+
+.prose .u-micro { color: var(--ink-3); }

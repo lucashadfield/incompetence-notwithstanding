@@ -1,0 +1,86 @@
+/* ── site header ──────────────────────────────────────────────────────── */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  height: var(--header-h);
+}
+
+.site-header__rule { height: 1px; background: var(--rule); }
+
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: var(--pixel);
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* wordmark */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+.wordmark__mark {
+  width: 10px;
+  height: 10px;
+  background: var(--mark);
+  box-shadow: 3px 3px 0 var(--mark-shadow);
+  transition: box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+}
+/* hover lightens the ghost to pale water and closes the offset by a pixel */
+.wordmark:hover .wordmark__mark { box-shadow: 3px 3px 0 var(--mist); transform: translate(1px, 1px); }
+.wordmark__text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+
+/* nav */
+.nav { display: flex; align-items: center; gap: clamp(1rem, 3vw, 2.25rem); }
+.nav__list { display: flex; align-items: center; gap: clamp(0.9rem, 2vw, 1.6rem); list-style: none; }
+.nav__list a {
+  position: relative;
+  display: inline-block;
+  padding-block: 0.35rem;
+  color: var(--ink-2);
+  transition: color 0.25s var(--ease);
+}
+.nav__list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease);
+}
+.nav__list a:hover { color: var(--ink); }
+.nav__list a:hover::after,
+.nav__list a[aria-current="page"]::after { transform: scaleX(1); }
+.nav__list a[aria-current="page"] { color: var(--ink); }
+
+.nav__tools { display: flex; align-items: center; gap: 0.5rem; }
+.icon-btn--menu { display: none; }

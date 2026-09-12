@@ -1,0 +1,32 @@
+{{ define "main" }}
+{{- $hasCover := partial "func/cover_resource.html" . }}
+<article class="page-single">
+  {{- if $hasCover }}
+  <div class="post__hero">
+    {{ partial "poster.html" (dict "page" . "variant" "hero" "loading" "eager") }}
+  </div>
+  {{- end }}
+
+  <div class="page-single__grid wrap">
+    <header class="page-single__head">
+      <p class="u-micro">{{ site.Title }}</p>
+      <h1 class="page-single__title">{{ .Title }}</h1>
+      {{- /* `description` is the meta/og description only. An on-page
+             standfirst is opt-in via a separate `standfirst` key, so a page can
+             have good search-result copy without a tagline under the title.
+             (Posts still use .Description for both — there the two jobs are
+             the same thing.) */}}
+      {{- with .Params.standfirst }}<p class="post__standfirst">{{ . }}</p>{{ end }}
+      <hr class="rule rule--accent">
+    </header>
+
+    <div class="prose">
+      {{ .Content }}
+    </div>
+
+    {{- if .Params.social }}
+    {{ partial "social.html" . }}
+    {{- end }}
+  </div>
+</article>
+{{ end }}

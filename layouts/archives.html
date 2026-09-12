@@ -1,0 +1,27 @@
+{{ define "main" }}
+<section class="wrap section section--top">
+  <header class="list-head">
+    <p class="u-micro">Everything, by year</p>
+    <h1 class="list-head__title">{{ .Title | default "Archive" }}</h1>
+    <hr class="rule rule--accent">
+  </header>
+
+  {{- $posts := where site.RegularPages "Section" "in" site.Params.mainSections }}
+  {{- range $posts.GroupByDate "2006" }}
+  <section class="archive-year">
+    <h2 class="archive-year__label">{{ .Key }}</h2>
+    <ol class="archive-list">
+      {{- range .Pages }}
+      <li class="archive-row">
+        <a href="{{ .RelPermalink }}">
+          <time class="archive-row__date u-micro" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "02 Jan" }}</time>
+          <span class="archive-row__title">{{ .Title }}</span>
+          <span class="archive-row__meta u-micro">{{ with (index .Params.tags 0) }}{{ partial "func/tagname.html" . }}{{ end }}</span>
+        </a>
+      </li>
+      {{- end }}
+    </ol>
+  </section>
+  {{- end }}
+</section>
+{{ end }}

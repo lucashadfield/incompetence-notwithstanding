@@ -1,0 +1,36 @@
+{{ define "main" }}
+{{- $posts := where site.RegularPages "Section" "in" site.Params.mainSections }}
+{{- $featured := index $posts 0 }}
+{{- $rest := after 1 $posts }}
+
+<section class="hero">
+  <div class="wrap hero__inner">
+    <h1 class="hero__title">{{ site.Params.intro | replaceRE ` (\w+)$` ` <span class="hero__dim">$1</span>` | safeHTML }}</h1>
+    <div class="hero__meta u-micro">
+      <span>{{ len $posts }} post{{ if ne (len $posts) 1 }}s{{ end }}</span>
+      <span class="dot" aria-hidden="true"></span>
+      <span>Since {{ site.Params.since }}</span>
+      <span class="dot" aria-hidden="true"></span>
+      <a href="{{ "/archives/" | relURL }}">Read the archive</a>
+    </div>
+  </div>
+</section>
+
+<section class="wrap section">
+  {{- with $featured }}
+  {{ partial "tile.html" (dict "page" . "variant" "feature" "index" (len $posts) "loading" "eager") }}
+  {{- end }}
+
+  {{- if $rest }}
+  <div class="tiles">
+    {{- range $i, $p := $rest }}
+    {{ partial "tile.html" (dict "page" $p "variant" "tile" "index" (sub (len $posts) (add $i 1))) }}
+    {{- end }}
+  </div>
+  {{- end }}
+</section>
+
+{{- with .Content }}
+<section class="wrap section"><div class="prose">{{ . }}</div></section>
+{{- end }}
+{{ end }}

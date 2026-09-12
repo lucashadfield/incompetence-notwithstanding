@@ -1,0 +1,15 @@
+{{- /*
+  Display name for a tag. Hugo title-cases taxonomy terms, which mangles
+  acronyms ("llms" → "Llms"), and the raw front-matter string is lower-case,
+  so the taxonomy page, the tile chips and the post kicker each rendered it
+  differently. One resolver, one answer.
+
+  Overrides live in [params.tagNames] in hugo.toml, keyed by the lower-cased
+  tag. Anything not listed falls back to title-casing.
+
+  Usage:  {{ partial "func/tagname.html" $tag }}
+*/ -}}
+{{- $raw := printf "%v" . -}}
+{{- $key := lower $raw -}}
+{{- $map := site.Params.tagNames | default dict -}}
+{{- return (index $map $key | default (title $raw)) -}}

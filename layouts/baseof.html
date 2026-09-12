@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.Locale | default "en" }}">
+<head>
+  {{- partial "head.html" . }}
+</head>
+<body class="page--{{ .Kind }}{{ with .Layout }} layout--{{ . }}{{ end }}">
+  <a class="skip-link u-micro" href="#content">Skip to content</a>
+  {{ partial "header.html" . }}
+  <main id="content" class="main">
+    {{- block "main" . }}{{ end }}
+  </main>
+  {{ partial "footer.html" . }}
+  {{ partial "search_overlay.html" . }}
+  {{- partial "scripts.html" . }}
+</body>
+</html>

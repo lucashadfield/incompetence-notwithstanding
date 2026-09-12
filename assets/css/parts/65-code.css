@@ -1,0 +1,78 @@
+/* ── code ─────────────────────────────────────────────────────────────── */
+:root {
+  --code-bg: #1F2E2B;
+  --code-fg: #E7E9DD;
+  --code-dim: #849490;
+}
+
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  padding: 0.14em 0.38em;
+  background: var(--paper-raised);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  color: var(--ink);
+  word-break: break-word;
+}
+
+.prose pre {
+  position: relative;
+  background: var(--code-bg);
+  color: var(--code-fg);
+  border-radius: var(--radius);
+  padding: 1.15rem 1.25rem;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  margin-block: 2em;
+  tab-size: 2;
+}
+.prose pre code {
+  font-family: var(--font-mono);
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+}
+.highlight { margin-block: 2em; }
+.highlight pre { margin-block: 0; }
+
+.code-copy {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  padding: 0.3rem 0.55rem;
+  font-size: var(--t-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-micro);
+  text-transform: uppercase;
+  color: var(--code-dim);
+  border: 1px solid color-mix(in srgb, var(--code-fg) 20%, transparent);
+  border-radius: var(--radius);
+  opacity: 0;
+  transition: opacity 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+pre:hover .code-copy, .code-copy:focus-visible { opacity: 1; }
+.code-copy:hover { color: var(--paper); border-color: var(--paper); }
+.code-copy[data-done="1"] { color: #A7D2B6; border-color: #A7D2B6; opacity: 1; }
+
+/* chroma syntax — palette-matched */
+.chroma .c, .chroma .ch, .chroma .cm, .chroma .c1, .chroma .cs, .chroma .cp, .chroma .cpf { color: var(--code-dim); font-style: italic; }
+.chroma .k, .chroma .kc, .chroma .kd, .chroma .kn, .chroma .kp, .chroma .kr { color: #A9CFD2; }
+.chroma .kt, .chroma .nc, .chroma .nn, .chroma .no { color: #C3D3C3; }
+.chroma .s, .chroma .sa, .chroma .sb, .chroma .sc, .chroma .dl, .chroma .sd, .chroma .s2, .chroma .se,
+.chroma .sh, .chroma .si, .chroma .sx, .chroma .sr, .chroma .s1, .chroma .ss { color: #E4C0A0; }
+.chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi, .chroma .il, .chroma .mo { color: #DCCFAE; }
+.chroma .nf, .chroma .fm { color: #DCCFAE; }
+.chroma .nb, .chroma .bp { color: #9FCFCB; }
+.chroma .nd, .chroma .nl, .chroma .nv, .chroma .vc, .chroma .vg, .chroma .vi { color: #C2C6B2; }
+.chroma .o, .chroma .ow, .chroma .p { color: #9FB3AE; }
+.chroma .nt { color: #8FC7CB; }
+.chroma .err { color: #E0A07E; }
+.chroma .gd { color: #E0A07E; }
+.chroma .gi { color: #A7D2B6; }
+.chroma .ge { font-style: italic; }
+.chroma .gs { font-weight: 600; }
+.chroma .lnt, .chroma .ln { color: color-mix(in srgb, var(--code-dim) 70%, transparent); margin-right: 0.6rem; }
+.chroma .hl { background: color-mix(in srgb, #ffffff 8%, transparent); display: block; }

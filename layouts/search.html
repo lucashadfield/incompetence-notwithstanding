@@ -1,0 +1,18 @@
+{{ define "main" }}
+<section class="wrap section section--top search-page">
+  <header class="list-head">
+    <p class="u-micro">Full text, in the browser</p>
+    <h1 class="list-head__title">{{ .Title | default "Search" }}</h1>
+    <hr class="rule rule--accent">
+  </header>
+
+  <div class="search-field search-field--page">
+    <span class="search-field__icon" aria-hidden="true">{{ partial "icon.html" "search" }}</span>
+    <input class="search-field__input" type="search" autocomplete="off" spellcheck="false" autofocus
+           placeholder="{{ .Params.placeholder | default "Search posts" }}" aria-label="Search posts"
+           data-search-input data-search-inline maxlength="80">
+  </div>
+  <ul class="search-results search-results--page" data-search-results data-search-inline></ul>
+  <p class="search-hint u-micro" data-search-hint data-search-inline>Results appear as you type.</p>
+</section>
+{{ end }}

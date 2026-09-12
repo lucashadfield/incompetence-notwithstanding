@@ -1,0 +1,17 @@
+{{- $src := .Destination -}}
+{{- $res := .PageInner.Resources.GetMatch $src -}}
+{{- if and $res (ne $res.MediaType.SubType "svg") -}}
+  {{- $small := $res.Resize "800x webp q80" -}}
+  {{- $large := $res.Resize "1600x webp q80" -}}
+  <figure class="fig">
+    <img src="{{ $large.RelPermalink }}" srcset="{{ $small.RelPermalink }} {{ $small.Width }}w, {{ $large.RelPermalink }} {{ $large.Width }}w"
+         sizes="(min-width: 900px) 860px, 100vw" width="{{ $large.Width }}" height="{{ $large.Height }}"
+         alt="{{ .Text }}" loading="lazy" decoding="async">
+    {{- with .Title }}<figcaption class="u-micro">{{ . }}</figcaption>{{ end }}
+  </figure>
+{{- else -}}
+  <figure class="fig">
+    <img src="{{ with $res }}{{ .RelPermalink }}{{ else }}{{ $src | safeURL }}{{ end }}" alt="{{ .Text }}" loading="lazy" decoding="async">
+    {{- with .Title }}<figcaption class="u-micro">{{ . }}</figcaption>{{ end }}
+  </figure>
+{{- end -}}

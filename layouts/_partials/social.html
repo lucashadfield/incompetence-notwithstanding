@@ -1,0 +1,51 @@
+{{- /*
+  "Elsewhere" module: one box, two rows. Address on top, profile marks in a
+  divided strip beneath. Driven by [[params.social]] in hugo.toml; mailto
+  entries make the address row, everything else becomes an icon cell.
+
+  Rendered from the layout into the right-hand column, not from a shortcode
+  inside .prose — it is chrome, not body copy.
+
+  Opt in per page with `social: true` in front matter.
+*/ -}}
+{{- $all := site.Params.social | default slice -}}
+{{- /* `complement` can't be used here: its elements must be comparable and
+       these are maps. Split explicitly. */ -}}
+{{- $mail := slice -}}
+{{- $links := slice -}}
+{{- range $all -}}
+  {{- if strings.HasPrefix .url "mailto:" -}}
+    {{- $mail = $mail | append . -}}
+  {{- else -}}
+    {{- $links = $links | append . -}}
+  {{- end -}}
+{{- end -}}
+{{- if $all }}
+<div class="social">
+  <p class="social__label u-micro">Elsewhere</p>
+  <div class="social__box">
+    {{- range $mail }}
+    {{- $addr := strings.TrimPrefix "mailto:" .url }}
+    {{- /* Still a real mailto href, so it works with JS off and right-click →
+           copy link does the sane thing. site.js intercepts the click and
+           copies instead: opening a mail client is rarely what anyone wants. */}}
+    <a class="social__mail" href="{{ .url }}" rel="me"
+       data-copy="{{ $addr }}" aria-label="Copy email address {{ $addr }}">
+      <span class="social__mail-icon" aria-hidden="true">{{ partial "icon.html" .icon }}</span>
+      <span class="social__mail-addr" data-copy-label>{{ $addr }}</span>
+    </a>
+    {{- end }}
+    {{- with $links }}
+    <ul class="social__marks">
+      {{- range . }}
+      <li style="--tint: var(--{{ .tint | default "mist" }})">
+        <a href="{{ .url }}" target="_blank" rel="me noopener" aria-label="{{ .name }}" title="{{ .name }}">
+          {{ partial "icon.html" .icon }}
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </div>
+</div>
+{{- end }}

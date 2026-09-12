@@ -1,0 +1,19 @@
+/* ── footer ───────────────────────────────────────────────────────────── */
+.site-footer {
+  margin-top: clamp(2rem, 4vw, 3.5rem);
+  background: var(--sunken);
+  border-top: 1px solid var(--rule);
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding-block: 1.25rem 1.75rem;
+}
+.site-footer__inner > * { color: var(--ink-2); }
+.site-footer__links { display: flex; flex-wrap: wrap; gap: 1.1rem; list-style: none; }
+.site-footer__links a { transition: color 0.2s var(--ease); }
+.site-footer__links a:hover { color: var(--accent); }

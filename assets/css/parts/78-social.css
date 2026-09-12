@@ -1,0 +1,70 @@
+/* ── elsewhere: contact + profile module ──────────────────────────────────
+   One box, two rows: the address on top, the profile marks in a divided strip
+   beneath — the same hairline-divided-cell idiom as the header's icon buttons,
+   but drawn as a single unit rather than four separate chips.
+
+   Lives in the right-hand column of a standalone page on wide screens and
+   reflows under the text below 1000px. No brand colours: each mark's cell
+   fills with its own palette tint on hover, and that is the only colour.
+   ---------------------------------------------------------------------- */
+.social__label { margin-bottom: 0.7rem; }
+
+.social__box {
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  overflow: hidden;          /* keeps the tint fills inside the square corners */
+}
+
+/* ── address row ── */
+.social__mail {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+.social__mail:hover { background: var(--wash); color: var(--accent); }
+.social__mail-icon { display: grid; place-items: center; flex-shrink: 0; }
+.social__mail-addr {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* ── marks strip ── */
+.social__marks {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* li stretches to the tallest cell; `a` must fill it, or the hover tint stops
+   short under the smaller glyphs (the LinkedIn square is 16px, not 18px) */
+.social__marks li { flex: 1 1 0; min-width: 0; display: flex; }
+.social__marks li + li { border-left: 1px solid var(--rule); }
+.social__marks a {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 0.7rem 0;
+  color: var(--ink);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+.social__marks a:hover { background: var(--tint, var(--mist)); }
+.social__marks a:focus-visible { outline-offset: -3px; }
+
+/* ── placement ────────────────────────────────────────────────────────────
+   Under the article. Capped so a three-cell strip doesn't stretch the full
+   reading measure and go limp. */
+.social {
+  margin-top: clamp(0.5rem, 1.5vw, 1rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+  max-width: 17rem;
+}

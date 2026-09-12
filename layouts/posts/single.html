@@ -1,0 +1,41 @@
+{{ define "main" }}
+{{- $hasCover := partial "func/cover_resource.html" . }}
+<article class="post">
+  {{- if $hasCover }}
+  <div class="post__hero">
+    {{ partial "poster.html" (dict "page" . "variant" "hero" "loading" "eager") }}
+  </div>
+  {{- end }}
+
+  <header class="post__head wrap">
+    <p class="post__kicker u-micro">
+      <a href="{{ "/archives/" | relURL }}">Archive</a>
+      <span class="dot" aria-hidden="true"></span>
+      <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format site.Params.dateFormat }}</time>
+      {{- if site.Params.showReadingTime }}<span class="dot" aria-hidden="true"></span><span>{{ .ReadingTime }} min read</span>{{ end }}
+      {{- with .Params.tags }}<span class="dot" aria-hidden="true"></span>
+        <span class="post__tags">{{ range $i, $t := . }}{{ if $i }}, {{ end }}<a href="{{ (printf "/tags/%s/" (urlize $t)) | relURL }}">{{ partial "func/tagname.html" $t }}</a>{{ end }}</span>
+      {{- end }}
+    </p>
+    <h1 class="post__title">{{ .Title }}</h1>
+    {{- with .Description }}<p class="post__standfirst">{{ . }}</p>{{ end }}
+    <hr class="rule rule--accent">
+  </header>
+
+  <div class="post__main wrap">
+    <div class="prose post__body">
+      {{ .Content }}
+    </div>
+  </div>
+
+  <footer class="post__foot wrap">
+    <hr class="rule">
+    <p class="u-micro post__backlinks">
+      <a href="{{ "/archives/" | relURL }}">All posts</a>
+      <span class="dot" aria-hidden="true"></span>
+      <a href="#top-of-page" data-to-top>Back to top</a>
+    </p>
+    {{- if site.Params.showPostNav }}{{ partial "post_nav.html" . }}{{ end }}
+  </footer>
+</article>
+{{ end }}

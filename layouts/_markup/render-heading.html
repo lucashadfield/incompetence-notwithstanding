@@ -1,0 +1,4 @@
+<h{{ .Level }} id="{{ .Anchor }}">
+  {{ .Text | safeHTML }}{{/* the # glyph is drawn in CSS so it never lands in .Plain / the search index */}}
+  <a class="h-anchor" href="#{{ .Anchor }}" aria-label="Link to this section"></a>
+</h{{ .Level }}>

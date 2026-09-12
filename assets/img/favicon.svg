@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!-- the wordmark mark: a near-black ink square with a hard accent-teal offset
+       shadow, exactly as .wordmark__mark draws it in 30-header.css -->
+  <rect x="9" y="9" width="20" height="20" fill="#26706C"/>
+  <rect x="3" y="3" width="20" height="20" fill="#1F2E2B"/>
+</svg>

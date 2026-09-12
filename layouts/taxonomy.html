@@ -1,0 +1,20 @@
+{{ define "main" }}
+<section class="wrap section section--top">
+  <header class="list-head">
+    <p class="u-micro">Index</p>
+    <h1 class="list-head__title">{{ .Title }}</h1>
+    <hr class="rule rule--accent">
+  </header>
+
+  <ul class="term-grid">
+    {{- range .Pages.ByTitle }}
+    <li class="term">
+      <a href="{{ .RelPermalink }}">
+        <span class="term__name">{{ partial "func/tagname.html" .Title }}</span>
+        <span class="term__count u-micro">{{ len .Pages }}</span>
+      </a>
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{ end }}

@@ -1,0 +1,17 @@
+{{- /*
+  Returns the cover image resource for a page, or nothing.
+  Looks for `cover.image` in frontmatter, first as a page-bundle resource,
+  then as a global asset path. Usage:
+      {{ with partial "func/cover_resource.html" . }}...{{ end }}
+*/ -}}
+{{- $res := "" -}}
+{{- with .Params.cover -}}
+  {{- with .image -}}
+    {{- with $.Resources.GetMatch . -}}
+      {{- $res = . -}}
+    {{- else -}}
+      {{- with resources.Get . -}}{{- $res = . -}}{{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $res -}}

@@ -1,0 +1,75 @@
+/* ── design tokens ─────────────────────────────────────────────────────────
+   One typeface family throughout: Space Grotesk for everything, Space Mono
+   (its sibling) for labels, numbers and code. No serif/sans pairing.
+
+   Palette: sampled from the ten cover illustrations in covers/ — pool teal,
+   sage, sand and peach on warm cream, over a deep slate-green ink. The single
+   accent is the saturated teal of the poolside cover (#26706C, 5.4:1 on
+   paper). No red anywhere: the art has none.
+
+   The logo mark is ink with an accent-teal offset behind it: a near-black chip
+   casting a coloured ghost. Solid accent made the header teal-on-teal, and a
+   terracotta chip on pale blue was too much colour for a 10px mark.
+   ------------------------------------------------------------------------ */
+:root {
+  /* surfaces — warm cream a touch above the cover art's own ground (#F0EDD6),
+     so illustrations read as slightly deeper panels on the page */
+  --paper: #FAF6EA;
+  --paper-raised: #FFFDF6;
+  --sunken: #EFEADA;
+
+  /* tints for tiles, tags, hovers — the five recurring colour families in
+     the covers: water/sky, cushion peach, plant sage, paper sand, stone */
+  --mist: #A9CFD2;
+  --peach: #E4C0A0;
+  --sage: #C3D3C3;
+  --sand: #DCCFAE;
+  --stone: #C2C6B2;
+  --wash: #EEF1E7;        /* faintest sage — hover and highlight state */
+
+  /* accent + ink */
+  --accent: #26706C;
+
+  /* logo mark — ink chip with an accent ghost behind it */
+  --mark: #1F2E2B;
+  --mark-shadow: #26706C;
+  --ink: #1F2E2B;
+  --ink-2: #4E635E;
+  --ink-3: #8A9A94;
+
+  /* lines */
+  --rule: color-mix(in srgb, var(--ink) 14%, transparent);
+  --rule-strong: color-mix(in srgb, var(--ink) 30%, transparent);
+
+  /* type */
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --font-display: var(--font-sans);
+
+  --t-micro: 0.625rem;
+  --t-small: 0.75rem;
+  --t-body: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+  --t-lead: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
+  --t-h3: clamp(1rem, 0.97rem + 0.2vw, 1.1rem);
+  --t-h2: clamp(1.2rem, 1.05rem + 0.55vw, 1.5rem);
+  --t-h1: clamp(1.7rem, 1.3rem + 1.7vw, 2.6rem);
+  --t-display: clamp(1.8rem, 1.3rem + 2.2vw, 2.9rem);
+  --tracking-micro: 0.14em;
+  --tracking-display: -0.035em;
+
+  /* space + shape */
+  --wrap: 1240px;
+  /* ONE reading measure, everywhere. The article wrap and the prose cap are
+     the same number, so any rule drawn at wrap width lines up exactly with
+     the text column under it. Pages that keep the wide 1240px wrap (home,
+     lists, archive) still cap their prose at this. */
+  --measure: 42rem;
+  --cover-ar: 21 / 9;     /* every cover crop, everywhere */
+  --gutter: clamp(1.25rem, 4.5vw, 3rem);
+  --header-h: 54px;
+  --radius: 0px;          /* square corners: nothing rounded anywhere */
+  --pixel: 4px;           /* the grid everything snaps to */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  color-scheme: light;
+}
