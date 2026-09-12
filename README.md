@@ -64,7 +64,7 @@ localhost:
 
 ```bash
 hugo server --bind 0.0.0.0 --port 1314 \
-  --baseURL "http://pi-server.axolotl-major.ts.net:1314/" --buildDrafts
+  --baseURL "http://lucas-server.axolotl-major.ts.net:1314/" --buildDrafts
 ```
 
 ## Deploying
@@ -390,7 +390,7 @@ tapes and minidiscs; a keyboard from directly above; cables running off-frame.
 
 Getting images off a phone: `python3 tools/upload_server.py 8787 uploads`
 serves a mobile upload form on the tailnet at
-`http://pi-server.axolotl-major.ts.net:8787/`. Files land in `uploads/`
+`http://lucas-server.axolotl-major.ts.net:8787/`. Files land in `uploads/`
 (gitignored); slug-rename it into `covers/` at 2400 wide, then copy it into the
 post bundle as `cover.png` and add the `cover:` frontmatter. Kill the server
 afterwards.
