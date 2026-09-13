@@ -39,7 +39,8 @@ layouts/
     ornament.html           the fleuron, as inline SVG
     corner.html             the vine flourish on a contents plate
     entry.html              one framed plate in a contents list (replaced tile.html)
-    social.html             the contact row under the portrait
+    social.html             the contact row under the portrait: address, then a
+                            closed hairline box of divided icon cells
     post_nav.html           prev / next, titles only
     func/roman.html         roman numeral for the contents list
     func/tagname.html       tag display name (acronym-safe)
@@ -129,9 +130,11 @@ round portrait and the about copy from `content/_index.md`, then the contents
 list. One page fewer to maintain, and the first thing a reader sees is who is
 writing.
 
-The masthead block is **two columns** — portrait and contact row on the left in
-a 144px track, statement and copy on the right — collapsing to one centred
-column below 720px. It was one centred column with a 2.6rem title, which put
+The masthead block is **two columns** — statement and copy on the left,
+portrait and contact row on the right in a 144px track — collapsing to one
+centred column below 720px, where the aside is ordered first. The aside is
+first in the markup and both columns are placed explicitly with `grid-area`,
+so the source order survives the collapse. It was one centred column with a 2.6rem title, which put
 the contents list below the fold on a laptop.
 
 Navigation lives in exactly one place, the site header: menu entries, Search
@@ -248,7 +251,7 @@ What took several passes to get right, and is worth not re-deriving:
 
 The exception is `assets/img/portrait.jpg`, set as a book sets a frontispiece:
 144px, round, double-ruled with an ink hairline inside and a rubric ring
-outside, and slightly desaturated. It sits in the left column of the masthead
+outside, and slightly desaturated. It sits in the right column of the masthead
 block with the contact row under it.
 
 Otherwise there is no cover art, no tile grid, no `og:image`, and the feed carries no

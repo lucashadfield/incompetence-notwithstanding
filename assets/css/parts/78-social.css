@@ -9,9 +9,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.7rem;
   width: 100%;
   max-width: 13rem;
+  /* room for the outer keyline of the marks box */
+  margin-bottom: 4px;
 }
 
 .social__mail {
@@ -28,14 +30,17 @@
 .social__mail:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
 .social__mail[data-copied] { color: var(--rubric); }
 
-/* the marks: a rubric hairline above and below, cells divided by hairlines —
-   the same two-rule idiom as the contents plates, at strip scale */
+/* the marks: a closed hairline box with divided cells. It was ruled top and
+   bottom only, which left the left and right cells hanging open at the ends —
+   the strip needs to be a shape, not two lines. */
 .social__marks {
   display: flex;
   justify-content: center;
   width: 100%;
   list-style: none;
-  border-block: 1px solid color-mix(in srgb, var(--rubric) 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--rubric) 30%, transparent);
+  box-shadow: 0 0 0 3px var(--paper), 0 0 0 4px color-mix(in srgb, var(--rubric) 14%, transparent);
+  background: var(--paper);
 }
 .social__marks li { flex: 1 1 0; min-width: 0; display: flex; }
 .social__marks li + li { border-left: 1px solid var(--rule-2); }

@@ -8,10 +8,14 @@
 
 .hero__grid {
   display: grid;
-  grid-template-columns: 144px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 144px;
   gap: clamp(1.5rem, 4vw, 3rem);
   align-items: start;
 }
+/* the aside is first in the markup so it comes first when the grid collapses,
+   and placed explicitly so it sits on the right when it does not */
+.hero__body { grid-area: 1 / 1; }
+.hero__aside { grid-area: 1 / 2; }
 .hero__aside { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
 
 .hero__title {
@@ -19,8 +23,9 @@
   font-weight: 500;
   font-size: clamp(1.55rem, 1.25rem + 1.1vw, 2.1rem);
   line-height: 1.15;
-  max-width: 26ch;
-  text-wrap: balance;
+  /* no measure and no balancing: the column width is the only thing that
+     should decide where this breaks */
+  text-wrap: pretty;
 }
 .hero__dim { color: var(--ink-3); }
 
@@ -56,6 +61,7 @@
 
 @media (max-width: 720px) {
   .hero__grid { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; }
-  .hero__title { margin-inline: auto; }
+  .hero__body, .hero__aside { grid-area: auto; }
+  .hero__aside { order: -1; }
   .hero__prose { text-align: left; }
 }
