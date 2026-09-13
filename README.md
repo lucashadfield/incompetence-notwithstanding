@@ -39,8 +39,8 @@ layouts/
     ornament.html           the fleuron, as inline SVG
     corner.html             the vine flourish on a contents plate
     entry.html              one framed plate in a contents list (replaced tile.html)
-    social.html             the contact row under the portrait: address, then a
-                            closed hairline box of divided icon cells
+    social.html             the contact box under the portrait: address row,
+                            then a divided strip of icon cells
     post_nav.html           prev / next, titles only
     func/roman.html         roman numeral for the contents list
     func/tagname.html       tag display name (acronym-safe)

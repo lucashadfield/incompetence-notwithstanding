@@ -1,54 +1,52 @@
 /* ── contact row ──────────────────────────────────────────────────────────
-   The address over a hairline-ruled strip of marks, sitting under the
-   portrait in the homepage masthead block. No heading and no border box: it
-   is the third element in a two-column header, and a panel there read as
-   clutter. Replaced a bordered "Elsewhere" module with five palette tints,
-   which went when the cover art did.
+   One hairline box, two rows: the address on top, the profile marks in a
+   divided strip beneath. Sits under the portrait in the homepage masthead
+   block, with no heading — it is the third element in a two-column header, and
+   a label there read as clutter.
+
+   Single border, deliberately. It had a 3px paper gap and an outer keyline
+   (the double-rule device from the contents plates), which at 13rem wide read
+   as a box inside a box. The plates are 40rem; the device does not scale down.
    ---------------------------------------------------------------------- */
 .social {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.7rem;
   width: 100%;
   max-width: 13rem;
-  /* room for the outer keyline of the marks box */
-  margin-bottom: 4px;
+  border: 1px solid color-mix(in srgb, var(--rubric) 30%, transparent);
+  background: var(--paper);
 }
 
+/* ── address row ── */
 .social__mail {
-  max-width: 100%;
-  overflow-wrap: anywhere;
+  display: block;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--rubric) 22%, transparent);
   text-align: center;
   text-transform: none;          /* an address is not a label */
   letter-spacing: 0.01em;
-  color: var(--ink-2);
   font-size: 0.8rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--rubric) 30%, transparent);
-  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
 }
-.social__mail:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+.social__mail:hover { color: var(--rubric); background: var(--wash); }
 .social__mail[data-copied] { color: var(--rubric); }
 
-/* the marks: a closed hairline box with divided cells. It was ruled top and
-   bottom only, which left the left and right cells hanging open at the ends —
-   the strip needs to be a shape, not two lines. */
+/* ── marks strip ── */
 .social__marks {
   display: flex;
   justify-content: center;
-  width: 100%;
   list-style: none;
-  border: 1px solid color-mix(in srgb, var(--rubric) 30%, transparent);
-  box-shadow: 0 0 0 3px var(--paper), 0 0 0 4px color-mix(in srgb, var(--rubric) 14%, transparent);
-  background: var(--paper);
 }
+/* the li stretches to the tallest cell; the `a` must fill it, or the hover
+   wash stops short under the smaller glyphs (LinkedIn renders at 16px against
+   the others' 18px) */
 .social__marks li { flex: 1 1 0; min-width: 0; display: flex; }
-.social__marks li + li { border-left: 1px solid var(--rule-2); }
+.social__marks li + li { border-left: 1px solid color-mix(in srgb, var(--rubric) 18%, transparent); }
 .social__marks a {
   flex: 1;
   display: grid;
   place-items: center;
-  padding: 0.45rem 0;
+  padding: 0.5rem 0;
   color: var(--ink-2);
   transition: color 0.2s var(--ease), background 0.2s var(--ease);
 }
