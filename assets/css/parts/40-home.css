@@ -1,39 +1,46 @@
 /* ── homepage masthead block ──────────────────────────────────────────────
-   Two columns, so the portrait, the contact row, the statement and the about
-   copy all fit above the contents list instead of pushing it off the first
-   screen. Single column below 720px.
+   One column with the portrait floated right and the statement and copy
+   running around it. This was a two-column grid; a float with shape-outside
+   lets the text close under the portrait instead of leaving a column of empty
+   paper beside the second and third paragraphs.
    ---------------------------------------------------------------------- */
 .hero { padding-block: clamp(1.75rem, 3.5vw, 2.5rem) 0; }
 .hero .orn--head { margin-top: clamp(1rem, 2vw, 1.5rem); }
 
-.hero__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 144px;
-  gap: clamp(1.5rem, 4vw, 3rem);
-  align-items: start;
+.hero__inner {
+  /* 45rem, not the 52rem page wrap: wide enough that the statement sits on
+     one line beside the portrait, narrow enough that the copy running full
+     width under it stays readable */
+  max-width: 45rem;
+  margin-inline: auto;
 }
-/* the aside is first in the markup so it comes first when the grid collapses,
-   and placed explicitly so it sits on the right when it does not */
-.hero__body { grid-area: 1 / 1; }
-.hero__aside { grid-area: 1 / 2; }
-.hero__aside { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
+/* the float has to be cleared before the ornament, or it hangs into it */
+.hero__inner::after { content: ""; display: block; clear: both; }
 
 .hero__title {
   font-family: var(--font-display);
   font-weight: 500;
   font-size: clamp(1.55rem, 1.25rem + 1.1vw, 2.1rem);
   line-height: 1.15;
-  /* no measure and no balancing: the column width is the only thing that
-     should decide where this breaks */
+  /* no measure and no balancing: the column width and the float are the only
+     things that should decide where this breaks */
   text-wrap: pretty;
 }
 .hero__dim { color: var(--ink-3); }
 
+/* .prose caps itself at --measure and 60-prose.css loads after this file, so
+   the override has to out-specify it rather than just restate max-width */
+.hero .hero__prose {
+  /* no cap: the point of the float is that the copy closes under the portrait,
+     and a ch cap stopped the lines short of it. The 45rem container is the
+     measure here — long for an article, fine for three paragraphs of bio. */
+  max-width: none;
+}
+
 .hero__prose {
-  max-width: 62ch;
   /* .prose carries a 2–3rem bottom pad for article pages; here the contact bar
      follows immediately */
-  padding-block: clamp(0.75rem, 1.5vw, 1.1rem) 0 !important;
+  padding-block: clamp(0.6rem, 1.2vw, 1rem) 0 !important;
   font-size: 1rem;
 }
 .hero__prose > p:first-child { margin-top: 0; }
@@ -42,15 +49,20 @@
 /* ── portrait ─────────────────────────────────────────────────────────────
    The one photograph on the site, set as a book sets a frontispiece: small,
    round, double-ruled — a hairline ink ring, a cream mat, a rubric ring
-   outside it.
+   outside it. shape-outside makes the copy follow the circle rather than the
+   square box the circle sits in.
    ---------------------------------------------------------------------- */
 .portrait {
+  float: right;
   width: 144px;
   height: 144px;
+  margin: 0.25rem 0 0.6rem 1.6rem;
   padding: 4px;
   border-radius: 50%;
   border: 1px solid color-mix(in srgb, var(--rubric) 45%, transparent);
   background: var(--paper);
+  shape-outside: circle(50%);
+  shape-margin: 0.7rem;
 }
 .portrait img {
   width: 100%;
@@ -61,9 +73,18 @@
   filter: saturate(0.92);
 }
 
-@media (max-width: 720px) {
-  .hero__grid { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; }
-  .hero__body, .hero__aside { grid-area: auto; }
-  .hero__aside { order: -1; }
-  .hero__prose { text-align: left; }
+@media (max-width: 560px) {
+  /* at this width a 144px float leaves a 3-word measure beside it */
+  .portrait { float: none; margin: 0 auto 1.1rem; }
+  .hero__title, /* .prose caps itself at --measure and 60-prose.css loads after this file, so
+   the override has to out-specify it rather than just restate max-width */
+.hero .hero__prose {
+  /* no cap: the point of the float is that the copy closes under the portrait,
+     and a ch cap stopped the lines short of it. The 45rem container is the
+     measure here — long for an article, fine for three paragraphs of bio. */
+  max-width: none;
+}
+
+.hero__prose { text-align: left; }
+  .hero__title { text-align: center; }
 }

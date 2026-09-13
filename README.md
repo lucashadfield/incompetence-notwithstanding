@@ -39,8 +39,8 @@ layouts/
     ornament.html           the fleuron, as inline SVG
     corner.html             the vine flourish on a contents plate
     entry.html              one framed plate in a contents list (replaced tile.html)
-    social.html             the contact bar under the about copy: one row of
-                            hairline-divided cells, address then marks
+    social.html             the contact bar, centred under the about copy: one
+                            row of hairline-divided cells, address then marks
     post_nav.html           prev / next, titles only
     func/roman.html         roman numeral for the contents list
     func/tagname.html       tag display name (acronym-safe)
@@ -130,11 +130,17 @@ round portrait and the about copy from `content/_index.md`, then the contents
 list. One page fewer to maintain, and the first thing a reader sees is who is
 writing.
 
-The masthead block is **two columns** — statement and copy on the left,
-portrait and contact row on the right in a 144px track — collapsing to one
-centred column below 720px, where the aside is ordered first. The aside is
-first in the markup and both columns are placed explicitly with `grid-area`,
-so the source order survives the collapse. It was one centred column with a 2.6rem title, which put
+The masthead block is **one column with the portrait floated right**, capped
+at 45rem: wide enough that the statement sits on one line beside the portrait,
+narrow enough that the copy closing under it stays readable. `shape-outside:
+circle(50%)` makes the copy follow the circle rather than the square box it
+sits in, and `.hero__inner::after` clears the float before the ornament. Below
+560px the float is dropped and the portrait centres, because a 144px float
+leaves a three-word measure beside it.
+
+It was a two-column grid before, which left a column of empty paper beside the
+second and third paragraphs. Note `.hero .hero__prose` has to out-specify
+`.prose`, which caps itself at `--measure` and loads later in the cascade. It was one centred column with a 2.6rem title, which put
 the contents list below the fold on a laptop.
 
 Navigation lives in exactly one place, the site header: menu entries, Search
@@ -251,9 +257,8 @@ What took several passes to get right, and is worth not re-deriving:
 
 The exception is `assets/img/portrait.jpg`, set as a book sets a frontispiece:
 144px, round, double-ruled with an ink hairline inside and a rubric ring
-outside, and slightly desaturated. It is the whole right column of the masthead
-block; the contact bar moved under the copy on the left, because a square panel
-directly beneath a round frame put the two shapes in a fight.
+outside, and slightly desaturated. Floated right in the masthead block with the
+copy running around it; the contact bar is centred underneath.
 
 Otherwise there is no cover art, no tile grid, no `og:image`, and the feed carries no
 enclosure. Removing it took out `_partials/poster.html`,

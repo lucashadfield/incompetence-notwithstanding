@@ -12,7 +12,8 @@
   align-items: stretch;
   width: fit-content;
   max-width: 100%;
-  margin-top: clamp(1.1rem, 2vw, 1.5rem);
+  margin: clamp(1.1rem, 2vw, 1.5rem) auto 0;   /* centred under the copy */
+  clear: both;
   border: 1px solid color-mix(in srgb, var(--rubric) 30%, transparent);
   background: var(--paper);
 }
@@ -49,6 +50,3 @@
 .social__marks a:hover { color: var(--rubric); background: var(--wash); }
 .social__marks a:focus-visible { outline-offset: -3px; }
 
-@media (max-width: 720px) {
-  .social { margin-inline: auto; }
-}
