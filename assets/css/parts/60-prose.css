@@ -3,7 +3,9 @@
   max-width: var(--measure);
   padding-block: clamp(1.25rem, 2.5vw, 2rem) clamp(2rem, 4vw, 3rem);
   color: var(--ink);
-  hyphens: auto;
+  /* off: Chromium hyphenates anything ≥5 chars, which shreds mid-word breaks
+     at this measure for no ragged-edge benefit. Revisit only if ever justified. */
+  hyphens: manual;
 }
 
 .prose > * + * { margin-top: 1.15em; }

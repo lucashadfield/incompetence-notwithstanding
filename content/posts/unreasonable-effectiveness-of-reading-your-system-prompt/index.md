@@ -24,4 +24,4 @@ It really isn't even that hard. Back of the envelope: a pretty big system prompt
 
 Every time I have done this, I have come away with a much better, cleaner prompt, lower costs and a quality bump. 
 
-Try it out. Get your agent to render your system prompt as it would appear at runtime. And then read it. All of it.
+Try it out. Get your agent to render your system prompt as it would appear at runtime. And then sit down and read it. All of it.

@@ -102,7 +102,7 @@ and type sizes are defined.
 | `--paper` | `#FCFAF4` | page background |
 | `--paper-2` | `#F6F2E8` | masthead and footer band. Mirrored in the hardcoded `theme-color` meta in `_partials/head.html` — change both. Upper-bounded by Chromium's theme-color rejection (~240 channel-average), not by taste |
 | `--paper-raised` / `--sunken` / `--wash` | `#FFFDF7` / `#F2EEE4` / `#F7F2E6` | panels, figure backing, hover |
-| `--ink` / `--ink-2` / `--ink-3` | `#1E1C1A` / `#4B4741` / `#8C857B` | text, secondary, labels |
+| `--ink` / `--ink-2` / `--ink-3` | `#34302C` / `#4B4741` / `#8C857B` | text, secondary, labels. `--ink` was lightened from `#1E1C1A` when the body face moved from Spectral Light to Regular |
 | `--rubric` | `#8A2F1F` | **structure**: initials, kickers, ornaments, list markers, rules |
 | `--link` | `#2F5D57` | running-text links only, so they do not read as rubrication |
 

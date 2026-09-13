@@ -21,7 +21,9 @@
   --wash: #F7F2E6;         /* hover */
 
   /* ink */
-  --ink: #1E1C1A;
+  --ink: #34302C;          /* body text. Lightened from #1E1C1A when the body
+                              face moved from Spectral Light to Regular, so the
+                              page doesn't read a step darker than before */
   --ink-2: #4B4741;
   --ink-3: #8C857B;
 
