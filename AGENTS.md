@@ -183,7 +183,7 @@ The first version lifted to `--paper-raised`, which is a 3% step off the page
 and read as no change at all. Below 520px the flourishes are hidden; at 40px on
 a ~290px plate they crowd the text instead of framing it.
 
-The body column is centre-axis: title block, kicker, standfirst, ornaments,
+The body column is centre-axis: title block, kicker, ornaments,
 contents entries and archive year labels all centre; body copy is ragged right,
 never justified. CSS hyphenation is not good enough for justified setting at
 this measure.
@@ -306,9 +306,9 @@ all deleted. Anything needed is in git history at `0716990^`.
   ```bash
   hugo new content content/posts/my-post/index.md
   ```
-- Frontmatter that matters: `title`, `date`, `tags`, `description` (the
-  standfirst under the title *and* the meta description), `summary` (the
-  contents-list blurb).
+- Frontmatter that matters: `title`, `date`, `tags`, `description` (the meta
+  description — *not* shown under the post title; on-page taglines are opt-in
+  via a `standfirst` key), `summary` (the contents-list blurb).
 - Homepage statement: `intro` in `hugo.toml`. The last word is dimmed by a
   `replaceRE` in `home.html`.
 - Contents numbering: `_partials/func/roman.html` turns the position into a

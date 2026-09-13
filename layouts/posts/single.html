@@ -11,7 +11,8 @@
       {{- end }}
     </p>
     <h1 class="post__title">{{ .Title }}</h1>
-    {{- with .Description }}<p class="post__standfirst">{{ . }}</p>{{ end }}
+    {{- /* No standfirst here: .Description is meta/preview copy only, shown on
+           the contents list via .Summary and in <meta name=description>. */}}
     <div class="orn orn--head" aria-hidden="true">{{ partial "ornament.html" . }}</div>
   </header>
 
