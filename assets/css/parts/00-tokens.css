@@ -14,7 +14,9 @@
   /* surfaces */
   --paper: #FCFAF4;
   --paper-raised: #FFFDF7;
-  --paper-2: #F7F3E9;      /* masthead / footer band */
+  --paper-2: #F6F2E8;      /* masthead / footer band; also the theme-color
+                              meta in _partials/head.html — Chromium rejects
+                              theme-colors brighter than ~240 channel-average */
   --sunken: #F2EEE4;
   --wash: #F7F2E6;         /* hover */
 
