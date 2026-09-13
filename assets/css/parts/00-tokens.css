@@ -25,7 +25,6 @@
 
   /* the two accents */
   --rubric: #8A2F1F;       /* structure: initials, kickers, ornaments, rules */
-  --accent: var(--rubric); /* legacy alias — everything structural uses it */
   --link: #2F5D57;         /* running text links only */
 
   /* lines */
@@ -55,15 +54,11 @@
   --t-h1: clamp(1.55rem, 1.25rem + 1.1vw, 2.1rem);   /* every page title */
   --t-mast: clamp(1.25rem, 1rem + 1vw, 1.6rem);      /* the wordmark */
   --tracking-micro: 0.17em;      /* every label: uppercase serif, wide */
-  --tracking-display: 0;         /* the display face is not tracked in */
 
   /* space + shape */
   --wrap: 52rem;           /* masthead, footer, index pages */
   --measure: 35rem;        /* the reading column */
   --gutter: clamp(1.25rem, 4vw, 2.5rem);
-  --header-h: auto;
-  --radius: 0px;
-  --pixel: 4px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 
   color-scheme: light;

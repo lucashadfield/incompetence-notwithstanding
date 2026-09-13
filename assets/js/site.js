@@ -1,31 +1,8 @@
-/* site behaviour: nav, search, reading progress, code copy */
+/* site behaviour: search, back-to-top, clipboard, code copy */
 (() => {
   const cfg = window.__SITE__ || {};
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
-
-  /* ── mobile nav ───────────────────────────────────────────────────── */
-  const nav = $('.nav');
-  const menuBtn = $('[data-menu-toggle]');
-  if (nav && menuBtn) {
-    menuBtn.addEventListener('click', () => {
-      const open = nav.classList.toggle('is-open');
-      menuBtn.setAttribute('aria-expanded', String(open));
-    });
-  }
-
-  /* ── reading progress ─────────────────────────────────────────────── */
-  const bar = $('[data-progress]');
-  if (bar) {
-    const update = () => {
-      const h = document.documentElement;
-      const max = h.scrollHeight - h.clientHeight;
-      const p = max > 0 ? Math.min(1, h.scrollTop / max) : 0;
-      bar.style.transform = `scaleX(${p})`;
-    };
-    document.addEventListener('scroll', update, { passive: true });
-    update();
-  }
 
   /* ── back to top ──────────────────────────────────────────────────── */
   $$('[data-to-top]').forEach((el) =>

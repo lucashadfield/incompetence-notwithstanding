@@ -28,7 +28,6 @@
   font-weight: 500;
   font-size: var(--t-h1);
   line-height: 1.06;
-  letter-spacing: var(--tracking-display);
   margin-top: 0.85rem;
   text-wrap: balance;
 }

@@ -40,7 +40,6 @@ a { color: inherit; text-decoration: none; }
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
-.wrap--measure { max-width: var(--measure); }
 
 .main { display: block; min-height: 55vh; flex: 1; }
 
@@ -85,8 +84,8 @@ a { color: inherit; text-decoration: none; }
 
 .rule { border: 0; height: 1px; background: var(--rule); margin-block: clamp(1.5rem, 3vw, 2.25rem); }
 /* the structural rule: a hairline with a short rubric segment centred on it */
-.rule--accent { position: relative; background: var(--rule-2); overflow: visible; }
-.rule--accent::before {
+.rule--rubric { position: relative; background: var(--rule-2); overflow: visible; }
+.rule--rubric::before {
   content: "";
   position: absolute;
   left: 50%;

@@ -3,7 +3,7 @@
   <header class="list-head">
     <p class="u-micro">Everything, by year</p>
     <h1 class="list-head__title">{{ .Title | default "Archive" }}</h1>
-    <hr class="rule rule--accent">
+    <hr class="rule rule--rubric">
   </header>
 
   {{- $posts := where site.RegularPages "Section" "in" site.Params.mainSections }}

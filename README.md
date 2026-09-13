@@ -19,7 +19,6 @@ content/
 tools/
   clockwork_initials.py     mechanical drop-cap generator — NOT part of the build
   fonts/                    a font the generator needs; never shipped to a browser
-  upload_server.py          phone → box image upload (legacy, from the cover-art era)
 layouts/
   baseof.html               shell: header, main, footer, search overlay
   home.html                 statement, portrait, about copy, contents list
@@ -104,7 +103,7 @@ and type sizes are defined.
 | `--paper-2` | `#F7F3E9` | masthead and footer band |
 | `--paper-raised` / `--sunken` / `--wash` | `#FFFDF7` / `#F2EEE4` / `#F7F2E6` | panels, figure backing, hover |
 | `--ink` / `--ink-2` / `--ink-3` | `#1E1C1A` / `#4B4741` / `#8C857B` | text, secondary, labels |
-| `--rubric` | `#8A2F1F` | **structure**: initials, kickers, ornaments, list markers, rules. Aliased as `--accent`, which is what most rules still say |
+| `--rubric` | `#8A2F1F` | **structure**: initials, kickers, ornaments, list markers, rules |
 | `--link` | `#2F5D57` | running-text links only, so they do not read as rubrication |
 
 Two colours of ink, as a hand-press would have them. This replaced a pastel
@@ -296,9 +295,10 @@ Link previews are therefore text-only (`twitter:card` is always `summary`). If
 that ever matters, the fix is a generated type-only card, not a return to
 illustration.
 
-The old cover library still exists at `covers/` and its Midjourney prompt
-recipe at `cover-prompts.md`, unreferenced by the build and not published —
-kept as a record, since neither is reachable from any template.
+The cover library (`covers/`, ten 2400px PNGs), its Midjourney prompt recipe
+(`cover-prompts.md`), the 61 MB of `uploads/` they were staged through and
+`tools/upload_server.py`, which existed to get phone photos onto the box, are
+all deleted. Anything needed is in git history at `0716990^`.
 
 ## Editing
 

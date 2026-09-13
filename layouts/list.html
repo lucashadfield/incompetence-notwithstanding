@@ -9,7 +9,7 @@
     {{- with .Description }}<p class="post__standfirst">{{ . }}</p>{{ end }}
     {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
     <p class="u-micro list-head__count">{{ len .Pages }} post{{ if ne (len .Pages) 1 }}s{{ end }}</p>
-    <hr class="rule rule--accent">
+    <hr class="rule rule--rubric">
   </header>
 
   <div class="contents">
