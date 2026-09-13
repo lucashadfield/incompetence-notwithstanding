@@ -3,7 +3,7 @@
 # absolute asset URL derive from this; nothing else in the repo hardcodes a
 # host. `hugo server` overrides it with --baseURL (see AGENTS.md), and a one-off
 # production build can override it too: hugo -b "https://example.com/"
-baseURL = "http://lucas-server.axolotl-major.ts.net:1314/"
+baseURL = "https://incompetencenotwithstanding.com/"
 # ────────────────────────────────────────────────────────────────────────────
 locale = 'en-us'
 title = 'Incompetence Notwithstanding'
