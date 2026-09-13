@@ -39,8 +39,8 @@ layouts/
     ornament.html           the fleuron, as inline SVG
     corner.html             the vine flourish on a contents plate
     entry.html              one framed plate in a contents list (replaced tile.html)
-    social.html             the contact box under the portrait: address row,
-                            then a divided strip of icon cells
+    social.html             the contact bar under the about copy: one row of
+                            hairline-divided cells, address then marks
     post_nav.html           prev / next, titles only
     func/roman.html         roman numeral for the contents list
     func/tagname.html       tag display name (acronym-safe)
@@ -251,8 +251,9 @@ What took several passes to get right, and is worth not re-deriving:
 
 The exception is `assets/img/portrait.jpg`, set as a book sets a frontispiece:
 144px, round, double-ruled with an ink hairline inside and a rubric ring
-outside, and slightly desaturated. It sits in the right column of the masthead
-block with the contact row under it.
+outside, and slightly desaturated. It is the whole right column of the masthead
+block; the contact bar moved under the copy on the left, because a square panel
+directly beneath a round frame put the two shapes in a fight.
 
 Otherwise there is no cover art, no tile grid, no `og:image`, and the feed carries no
 enclosure. Removing it took out `_partials/poster.html`,

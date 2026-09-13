@@ -1,26 +1,26 @@
-/* ── contact row ──────────────────────────────────────────────────────────
-   One hairline box, two rows: the address on top, the profile marks in a
-   divided strip beneath. Sits under the portrait in the homepage masthead
-   block, with no heading — it is the third element in a two-column header, and
-   a label there read as clutter.
+/* ── contact bar ──────────────────────────────────────────────────────────
+   One line under the about copy: address cell, then one cell per profile mark,
+   divided by hairlines inside a single rubric-tinted border.
 
-   Single border, deliberately. It had a 3px paper gap and an outer keyline
-   (the double-rule device from the contents plates), which at 13rem wide read
-   as a box inside a box. The plates are 40rem; the device does not scale down.
+   It used to sit under the portrait as a two-row box, which put a square panel
+   directly beneath a round frame — the two shapes fought. Under the text it
+   closes the left column instead, and a single row keeps it from reading as a
+   second block of content.
    ---------------------------------------------------------------------- */
 .social {
-  width: 100%;
-  max-width: 13rem;
+  display: flex;
+  align-items: stretch;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: clamp(1.1rem, 2vw, 1.5rem);
   border: 1px solid color-mix(in srgb, var(--rubric) 30%, transparent);
   background: var(--paper);
 }
 
-/* ── address row ── */
 .social__mail {
-  display: block;
-  padding: 0.5rem 0.6rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--rubric) 22%, transparent);
-  text-align: center;
+  display: flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
   text-transform: none;          /* an address is not a label */
   letter-spacing: 0.01em;
   font-size: 0.8rem;
@@ -31,24 +31,24 @@
 .social__mail:hover { color: var(--rubric); background: var(--wash); }
 .social__mail[data-copied] { color: var(--rubric); }
 
-/* ── marks strip ── */
-.social__marks {
-  display: flex;
-  justify-content: center;
-  list-style: none;
-}
-/* the li stretches to the tallest cell; the `a` must fill it, or the hover
-   wash stops short under the smaller glyphs (LinkedIn renders at 16px against
-   the others' 18px) */
-.social__marks li { flex: 1 1 0; min-width: 0; display: flex; }
-.social__marks li + li { border-left: 1px solid color-mix(in srgb, var(--rubric) 18%, transparent); }
+.social__marks { display: flex; list-style: none; }
+/* the li stretches to the row height; the `a` must fill it, or the hover wash
+   stops short under the smaller glyphs (LinkedIn renders at 16px against the
+   others' 18px) */
+.social__marks li { display: flex; }
+.social__marks li,
+.social__mail { border-right: 1px solid color-mix(in srgb, var(--rubric) 18%, transparent); }
+.social__marks li:last-child { border-right: 0; }
 .social__marks a {
-  flex: 1;
   display: grid;
   place-items: center;
-  padding: 0.5rem 0;
+  width: 2.6rem;
   color: var(--ink-2);
   transition: color 0.2s var(--ease), background 0.2s var(--ease);
 }
 .social__marks a:hover { color: var(--rubric); background: var(--wash); }
 .social__marks a:focus-visible { outline-offset: -3px; }
+
+@media (max-width: 720px) {
+  .social { margin-inline: auto; }
+}

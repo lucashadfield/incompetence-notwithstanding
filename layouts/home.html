@@ -20,12 +20,12 @@
       </figure>
       {{- end }}
       {{- end }}
-      {{- if .Params.social }}{{ partial "social.html" . }}{{ end }}
     </div>
 
     <div class="hero__body">
       <h1 class="hero__title">{{ site.Params.intro | replaceRE ` (\w+)$` ` <span class="hero__dim">$1</span>` | safeHTML }}</h1>
       {{- with .Content }}<div class="prose hero__prose">{{ . }}</div>{{ end }}
+      {{- if .Params.social }}{{ partial "social.html" . }}{{ end }}
     </div>
   </div>
   <div class="orn orn--head" aria-hidden="true">{{ partial "ornament.html" . }}</div>

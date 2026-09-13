@@ -31,7 +31,9 @@
 
 .hero__prose {
   max-width: 62ch;
-  padding-block: clamp(0.75rem, 1.5vw, 1.1rem) 0;
+  /* .prose carries a 2–3rem bottom pad for article pages; here the contact bar
+     follows immediately */
+  padding-block: clamp(0.75rem, 1.5vw, 1.1rem) 0 !important;
   font-size: 1rem;
 }
 .hero__prose > p:first-child { margin-top: 0; }
