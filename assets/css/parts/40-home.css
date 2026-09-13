@@ -26,7 +26,6 @@
      things that should decide where this breaks */
   text-wrap: pretty;
 }
-.hero__dim { color: var(--ink-3); }
 
 /* .prose caps itself at --measure and 60-prose.css loads after this file, so
    the override has to out-specify it rather than just restate max-width */
