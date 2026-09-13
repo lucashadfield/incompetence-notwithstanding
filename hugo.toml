@@ -82,7 +82,3 @@ summaryLength = 30
     name = "Tags"
     url = "/tags/"
     weight = 30
-  [[menu.main]]
-    name = "About"
-    url = "/about/"
-    weight = 40

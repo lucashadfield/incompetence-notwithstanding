@@ -1,0 +1,11 @@
+{{- /*
+  Corner flourish for a framed contents entry: a vine curl with three leaves
+  and a berry, in the spirit of the Goudy initial's foliage. Inline SVG in
+  currentColor, so the entry's hover state recolours it.
+
+  One shape, placed four times and rotated by CSS. It deliberately does NOT
+  draw the corner of the frame itself — an earlier version included a rounded
+  L-bracket, which doubled up against the frame's own square corner, and the
+  opaque backing needed to hide that broke the inner hairline at every corner.
+*/ -}}
+<svg class="entry__corner-svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" aria-hidden="true"><path d="M6 34C6 20 14 12 28 11.5"/><path d="M28 11.5c3.6-.1 5.6 1.4 5.6 3.4 0 1.8-1.6 3-3.2 2.4-1.5-.6-1.4-2.8.6-3.2"/><path d="M12.6 25.2c4.6-1.4 7.4-4.2 8.2-8.6-4.6.6-7.6 3.4-8.2 8.6z" fill="currentColor" stroke="none"/><path d="M17.4 30.6c1-4 .2-7.2-2.6-9.6-1.2 4.2-.4 7.4 2.6 9.6z" fill="currentColor" stroke="none"/><path d="M24.4 19.8c3.4.6 5.8 2.6 7 6-3.8-.2-6.2-2.2-7-6z" fill="currentColor" stroke="none"/><circle cx="24.6" cy="7.6" r="1.1" fill="currentColor" stroke="none"/></svg>

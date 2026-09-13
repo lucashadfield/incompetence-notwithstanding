@@ -1,50 +1,107 @@
 /* ── contents list ────────────────────────────────────────────────────────
-   What the illustrated tile grid used to be. Every index — home, a tag page,
-   search results — is now a centred list of entries numbered in roman, with
-   the title in the display face and the summary beneath.
+   What the illustrated tile grid used to be. Every index — home, a tag page —
+   is a centred list of framed plates numbered in roman: hairline double frame,
+   a vine flourish in each corner in the spirit of the Goudy initial, the title
+   in the display face.
+
+   Hover inverts the emphasis rather than adding to it: the rubric frame and
+   corners fall back to grey and the plate lifts onto the raised paper, so the
+   colour moves to the title instead. Without that, every plate shouted and the
+   page read as four competing blocks.
    ---------------------------------------------------------------------- */
 .contents { padding-block: clamp(1.5rem, 3vw, 2.25rem) clamp(2.5rem, 5vw, 4rem); }
 .contents__label {
   text-align: center;
-  padding-bottom: 1.1rem;
+  padding-bottom: 1.4rem;
 }
 
 .entry {
+  position: relative;
   display: block;
   text-align: center;
-  padding-block: clamp(1.25rem, 2.5vw, 1.6rem);
-  border-top: 1px solid var(--rule-2);
-  transition: background 0.25s var(--ease);
+  max-width: 40rem;
+  margin: 0 auto clamp(1.25rem, 2.5vw, 1.75rem);
+  padding: clamp(1.9rem, 3.5vw, 2.5rem) clamp(1.75rem, 4vw, 3rem);
+  background: var(--paper);
+  transition: background 0.3s var(--ease);
 }
-.entry:last-child { border-bottom: 1px solid var(--rule-2); }
-.entry:hover { background: var(--wash); }
+.entry:hover { background: var(--paper-raised); }
+
+/* the frame: an outer hairline and an inner one 4px inside it, drawn on one
+   element so the corner flourishes can sit on top of both */
+.entry__frame {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--rubric) 38%, transparent);
+  transition: border-color 0.3s var(--ease);
+  pointer-events: none;
+}
+.entry__frame::after {
+  content: "";
+  position: absolute;
+  inset: 4px;
+  border: 1px solid color-mix(in srgb, var(--rubric) 18%, transparent);
+  transition: border-color 0.3s var(--ease);
+}
+.entry:hover .entry__frame { border-color: color-mix(in srgb, var(--ink) 30%, transparent); }
+.entry:hover .entry__frame::after { border-color: color-mix(in srgb, var(--ink) 14%, transparent); }
+
+/* corners: one SVG placed four times and rotated, over the frame rules rather
+   than interrupting them */
+.entry__corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  color: var(--rubric);
+  transition: color 0.3s var(--ease);
+}
+.entry__corner-svg { width: 100%; height: 100%; }
+.entry__corner--tl { top: -1px; left: -1px; }
+.entry__corner--tr { top: -1px; right: -1px; transform: rotate(90deg); }
+.entry__corner--br { bottom: -1px; right: -1px; transform: rotate(180deg); }
+.entry__corner--bl { bottom: -1px; left: -1px; transform: rotate(270deg); }
+.entry:hover .entry__corner { color: var(--ink-3); }
 
 .entry__no {
+  position: relative;
   display: block;
   font-size: var(--t-micro);
   letter-spacing: var(--tracking-micro);
   color: var(--rubric);
   font-variant-numeric: lining-nums;
+  transition: color 0.3s var(--ease);
 }
+.entry:hover .entry__no { color: var(--ink-3); }
+
 .entry__title {
+  position: relative;
   display: block;
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(1.5rem, 1.25rem + 0.7vw, 1.85rem);
+  font-size: clamp(1.5rem, 1.25rem + 0.7vw, 1.9rem);
   line-height: 1.18;
-  margin-top: 0.3rem;
-  max-width: 30ch;
+  margin-top: 0.4rem;
+  max-width: 28ch;
   margin-inline: auto;
   text-wrap: balance;
+  transition: color 0.3s var(--ease);
 }
 .entry:hover .entry__title { color: var(--rubric); }
+
 .entry__desc {
+  position: relative;
   display: block;
-  margin-top: 0.5rem;
+  margin: 0.6rem auto 0;
   color: var(--ink-2);
   font-size: 0.95rem;
-  line-height: 1.5;
-  max-width: 46ch;
-  margin-inline: auto;
+  line-height: 1.55;
+  max-width: 44ch;
 }
-.entry__meta { display: block; margin-top: 0.65rem; }
+.entry__meta { position: relative; display: block; margin-top: 0.85rem; }
+
+@media (max-width: 520px) {
+  /* the flourishes are 40px on a ~290px-wide plate below this width: they stop
+     framing the text and start crowding it */
+  .entry__corner { display: none; }
+  .entry { padding-inline: 1.25rem; }
+}

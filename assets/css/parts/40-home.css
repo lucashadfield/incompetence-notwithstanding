@@ -1,8 +1,7 @@
 /* ── homepage ─────────────────────────────────────────────────────────── */
 .hero {
-  padding-block: clamp(2.25rem, 5vw, 3.5rem) clamp(1.5rem, 3vw, 2.25rem);
+  padding-block: clamp(2.25rem, 5vw, 3.5rem) clamp(1.25rem, 2.5vw, 2rem);
   text-align: center;
-  border-bottom: 1px solid var(--rule-2);
 }
 .hero__title {
   font-family: var(--font-display);
@@ -24,3 +23,33 @@
 }
 .hero__meta a { border-bottom: 1px solid var(--rule); }
 .hero__meta a:hover { border-bottom-color: var(--rubric); }
+
+/* ── portrait ─────────────────────────────────────────────────────────────
+   The one photograph on the site, set as a book would set a frontispiece:
+   small, round, and double-ruled — a hairline ink ring, a cream mat, a rubric
+   ring outside it. Anything larger competes with the statement above it.
+   ---------------------------------------------------------------------- */
+.portrait {
+  width: 168px;
+  height: 168px;
+  margin: clamp(1.5rem, 3vw, 2.25rem) auto 0;
+  padding: 5px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--rubric) 45%, transparent);
+  background: var(--paper);
+}
+.portrait img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  object-fit: cover;
+  filter: saturate(0.92);
+}
+
+.hero__prose {
+  padding-block: clamp(1.25rem, 2.5vw, 1.75rem) 0;
+  margin-inline: auto;
+  text-align: left;
+}
+.hero__prose > p:first-child { margin-top: 0; }

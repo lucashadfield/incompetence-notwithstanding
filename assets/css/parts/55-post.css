@@ -4,8 +4,7 @@
    ---------------------------------------------------------------------- */
 .post__head,
 .post__main,
-.post__foot,
-.post__runhead { --wrap: var(--measure); }
+.post__foot { --wrap: var(--measure); }
 
 .post__head {
   padding-top: clamp(1.75rem, 3.5vw, 2.75rem);
@@ -76,24 +75,6 @@
   margin-top: 0.15rem;
 }
 .post-nav__item:hover .post-nav__title { color: var(--rubric); }
-
-/* the folio: a page number is a pretence on the web, so this is just the two
-   rubric dashes that would flank one, closing the page off */
-.folio {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.7rem;
-  padding-block: 1.5rem;
-}
-.folio::before,
-.folio::after {
-  content: "";
-  width: 2.2rem;
-  height: 1px;
-  background: var(--rubric);
-  opacity: 0.4;
-}
 
 /* standalone pages (about, and any other leaf) */
 .page-single__grid {

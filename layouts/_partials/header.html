@@ -1,6 +1,10 @@
 <header class="site-header">
   <div class="site-header__inner wrap">
-    <a class="wordmark" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+    {{- /* Each word's initial is set a size larger, so the uppercase wordmark
+           reads as caps-and-small-caps rather than a flat run of capitals.
+           Cormorant Garamond has no true small caps, and synthesised ones look
+           like shrunken capitals, which is what this avoids. */}}
+    <a class="wordmark" href="{{ "/" | relURL }}">{{ site.Title | replaceRE `(^|\s)(\S)` `$1<span class="wordmark__cap">$2</span>` | safeHTML }}</a>
     <div class="site-header__rule" aria-hidden="true"></div>
 
     <nav class="nav" aria-label="Primary">

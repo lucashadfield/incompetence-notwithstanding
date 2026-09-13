@@ -2,7 +2,10 @@
 <section class="wrap section section--top">
   <header class="list-head">
     <p class="u-micro">{{ if eq .Kind "term" }}Tag{{ else }}Section{{ end }}</p>
-    <h1 class="list-head__title">{{ .Title }}</h1>
+    {{- /* a term page's .Title is Hugo's title-cased term, which mangles
+           acronyms ("llms" → "Llms") — go through the map like every other
+           surface does */}}
+    <h1 class="list-head__title">{{ if eq .Kind "term" }}{{ partial "func/tagname.html" .Data.Term }}{{ else }}{{ .Title }}{{ end }}</h1>
     {{- with .Description }}<p class="post__standfirst">{{ . }}</p>{{ end }}
     {{- with .Content }}<div class="prose">{{ . }}</div>{{ end }}
     <p class="u-micro list-head__count">{{ len .Pages }} post{{ if ne (len .Pages) 1 }}s{{ end }}</p>

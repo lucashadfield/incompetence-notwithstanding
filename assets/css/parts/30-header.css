@@ -37,6 +37,8 @@
   text-transform: uppercase;
 }
 .wordmark:hover { color: var(--rubric); }
+/* the initial of each word, a size up: caps and small caps out of one weight */
+.wordmark__cap { font-size: 1.3em; letter-spacing: 0.1em; }
 
 .site-header__rule {
   width: min(16rem, 60%);
@@ -65,12 +67,3 @@
   border-bottom-color: color-mix(in srgb, var(--rubric) 45%, transparent);
 }
 
-/* running head: site title left, page title right, over the article */
-.runhead {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding-block: 1rem 0.5rem;
-  border-bottom: 1px solid var(--rule-2);
-}
-.runhead span { color: var(--ink-3); }

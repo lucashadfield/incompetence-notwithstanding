@@ -1,10 +1,16 @@
 {{- /*
-  One line in a contents list: roman number, title, summary, meta.
-  Replaces tile.html, which existed to carry a cover image.
+  One entry in a contents list: a framed plate with vine corners, the roman
+  number, title, summary and meta. Replaces tile.html, which existed to carry
+  a cover image.
   Params: page, index (1-based position in the list, optional)
 */ -}}
 {{- $p := .page -}}
 <a class="entry" href="{{ $p.RelPermalink }}">
+  <span class="entry__frame" aria-hidden="true">
+    {{- range (slice "tl" "tr" "br" "bl") }}
+    <span class="entry__corner entry__corner--{{ . }}">{{ partial "corner.html" $ }}</span>
+    {{- end }}
+  </span>
   {{- with .index }}<span class="entry__no">{{ partial "func/roman.html" . }}</span>{{ end }}
   <span class="entry__title">{{ $p.Title }}</span>
   {{- with ($p.Description | default ($p.Summary | plainify | truncate 180)) }}

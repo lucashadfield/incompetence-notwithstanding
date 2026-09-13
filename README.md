@@ -10,10 +10,10 @@ ornate Goudy initial at the head of every post, and **no images anywhere**.
 
 ```
 content/
+  _index.md                 the home page — statement, portrait, about copy
   posts/                    one page bundle per post
     first-post/index.md
-  _index.md                 section stub — `build: {render: never}`, /posts/ is not a page
-  about/index.md            /about/
+  posts/_index.md           section stub — `build: {render: never}`, /posts/ is not a page
   archives.md               /archives/   (layout: archives)
   search.md                 /search/     (layout: search)
 tools/
@@ -22,9 +22,9 @@ tools/
   upload_server.py          phone → box image upload (legacy, from the cover-art era)
 layouts/
   baseof.html               shell: header, main, footer, search overlay
-  home.html                 centred statement + the contents list
-  posts/single.html         post: running head, centred title block, drop cap
-  single.html               standalone pages (about)
+  home.html                 statement, portrait, about copy, contents list
+  posts/single.html         post: centred title block, drop cap
+  single.html               standalone pages (none at present; kept for the next one)
   list.html                 tag term pages (contents list)
   taxonomy.html             /tags/
   archives.html             year-grouped index
@@ -37,8 +37,9 @@ layouts/
   _partials/
     head, header, footer, scripts, icon
     ornament.html           the fleuron, as inline SVG
-    entry.html              one line of a contents list (replaced tile.html)
-    social.html             the "Elsewhere" module on /about/
+    corner.html             the vine flourish on a contents plate
+    entry.html              one framed plate in a contents list (replaced tile.html)
+    social.html             the "Elsewhere" module, on the home page
     post_nav.html           prev / next, titles only
     func/roman.html         roman numeral for the contents list
     func/tagname.html       tag display name (acronym-safe)
@@ -46,6 +47,9 @@ assets/
   css/parts/*.css           concatenated in filename order → one stylesheet
   js/site.js                search, back-to-top, code copy, email copy
   js/vendor/fuse.basic.min.js
+  img/portrait.jpg          the one photograph on the site — in assets/, not a
+                            page bundle, because branch-bundle resources are
+                            copied into public/ referenced or not
   img/favicon.svg           the Goudy "I" block
   img/favicon-32.png        raster fallback, rasterised from the SVG
   img/apple-touch-icon.png  180×180, paper-filled (iOS composites on black)
@@ -120,6 +124,24 @@ Layout tokens: `--wrap: 52rem` (masthead, footer, index pages) and `--measure:
 / `.post__foot` and `.page-single__grid` — which is why they can all still
 share `.wrap`.
 
+There is no separate `/about/` page: the home page carries the statement, a
+round portrait and the about copy from `content/_index.md`, then the contents
+list, then the Elsewhere module. One page fewer to maintain, and the first
+thing a reader sees is who is writing.
+
+The masthead sets each word's initial one size up (`.wordmark__cap`, applied by
+a `replaceRE` in `_partials/header.html`) so the uppercase wordmark reads as
+caps and small caps. Cormorant Garamond has no true small caps and synthesised
+ones look like shrunken capitals.
+
+A contents entry is a framed plate: hairline double frame, a vine flourish in
+each corner (`_partials/corner.html`, one SVG rotated four times), the title in
+the display face. Hover moves the emphasis rather than adding to it — the frame
+and flourishes fall back to grey, the plate lifts to `--paper-raised`, and the
+colour transfers to the title. With everything rubric on hover the page read as
+a stack of competing blocks. Below 520px the flourishes are hidden; at 40px on
+a ~290px plate they crowd the text instead of framing it.
+
 The body column is centre-axis: title block, kicker, standfirst, ornaments,
 contents entries and archive year labels all centre; body copy is ragged right,
 never justified. CSS hyphenation is not good enough for justified setting at
@@ -169,9 +191,8 @@ python3 -c "from PIL import Image; im=Image.open('/tmp/fav180.png').convert('RGB
 ```
 
 Licensing: Goudy Initialen is a Dieter Steffmann digitisation, distributed
-free for personal use rather than under a libre licence. Fine for a personal
-blog; credited on `/about/`. Spectral, Cormorant Garamond and Space Mono are
-OFL.
+free for personal use rather than under a libre licence — fine for a personal
+blog. Spectral, Cormorant Garamond and Space Mono are OFL.
 
 ### tools/clockwork_initials.py
 
@@ -212,9 +233,14 @@ What took several passes to get right, and is worth not re-deriving:
   a stem reads as a strikethrough. Springs are excluded from crossings; a coil
   over a letter looks like a scribble.
 
-## No images
+## No images (except one)
 
-There is no cover art, no tile grid, no `og:image`, and the feed carries no
+The exception is `assets/img/portrait.jpg`, set as a book sets a frontispiece:
+168px, round, double-ruled with an ink hairline inside and a rubric ring
+outside, and slightly desaturated. Anything larger competes with the statement
+above it.
+
+Otherwise there is no cover art, no tile grid, no `og:image`, and the feed carries no
 enclosure. Removing it took out `_partials/poster.html`,
 `_partials/func/cover_resource.html`, `_partials/tile.html`,
 `assets/css/parts/50-tiles.css`, the `[[cascade]]` block that kept 2.5 MB
@@ -254,9 +280,10 @@ kept as a record, since neither is reachable from any template.
   `[outputs]` or the index disappears.
 - Tag display names: `[params.tagNames]` in `hugo.toml`, keyed by the
   lower-cased tag. Hugo title-cases taxonomy terms, which turns `llms` into
-  `Llms`; every surface goes through `_partials/func/tagname.html`.
+  `Llms`; every surface goes through `_partials/func/tagname.html`, including a
+  term page's own `<h1>`, which has to use `.Data.Term` rather than `.Title`.
 - Elsewhere links: `[[params.social]]` in `hugo.toml` (`name`, `url`, `icon`).
-  Turn the module on for a page with `social: true`. `mailto:` entries become
+  Turn the module on for a page with `social: true` — currently the home page. `mailto:` entries become
   the address row; everything else becomes an icon cell. Icons live in
   `_partials/icon.html`: GitHub and Letterboxd are
   [Simple Icons](https://simpleicons.org/) (CC0); LinkedIn and the envelope are
