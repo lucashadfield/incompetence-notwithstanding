@@ -30,7 +30,7 @@
 
 .wordmark {
   font-family: var(--font-display);
-  font-size: clamp(1.25rem, 1rem + 1vw, 1.6rem);
+  font-size: var(--t-mast);
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: 0.14em;

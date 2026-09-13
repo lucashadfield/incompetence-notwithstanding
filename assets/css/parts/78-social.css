@@ -24,7 +24,7 @@
   padding: 0.45rem 0.85rem;
   text-transform: none;          /* an address is not a label */
   letter-spacing: 0.01em;
-  font-size: 0.8rem;
+  font-size: var(--t-small);
   color: var(--ink-2);
   overflow-wrap: anywhere;
   transition: color 0.2s var(--ease), background 0.2s var(--ease);

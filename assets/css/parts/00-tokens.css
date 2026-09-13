@@ -38,14 +38,22 @@
   --font-display: "Cormorant Garamond", Georgia, serif;
   --font-mono: "Space Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
 
-  --t-micro: 0.72rem;
-  --t-small: 0.85rem;
-  --t-body: 1.0625rem;
-  --t-lead: 1.075rem;
-  --t-h3: 1.25rem;
-  --t-h2: 1.55rem;
-  --t-h1: clamp(2.1rem, 1.5rem + 2.4vw, 3.1rem);
-  --t-display: clamp(1.8rem, 1.3rem + 2vw, 2.6rem);
+  /* ── one scale, used everywhere ─────────────────────────────────────────
+     Every page title is --t-h1, every card/row title is --t-h2 or --t-h3, and
+     nothing sets a bare rem size for type that has a level. --t-h1 was
+     clamp(2.1rem → 3.1rem) for post titles while the homepage statement had
+     its own smaller ramp; the two disagreed by a full step, so the post title
+     now takes the homepage size and that is the site's largest type. */
+  --t-micro: 0.72rem;      /* labels, kickers, meta */
+  --t-small: 0.85rem;      /* captions, meta blurbs, tables, footnotes */
+  --t-code: 0.8125rem;     /* code blocks */
+  --t-body: 1.0625rem;     /* body copy */
+  --t-lead: 1.075rem;      /* standfirst */
+  --t-h4: 0.95rem;         /* mono/caps subhead inside prose */
+  --t-h3: 1.25rem;         /* archive rows, tag names, prev/next, results */
+  --t-h2: 1.55rem;         /* prose headings, contents-plate titles, year labels */
+  --t-h1: clamp(1.55rem, 1.25rem + 1.1vw, 2.1rem);   /* every page title */
+  --t-mast: clamp(1.25rem, 1rem + 1vw, 1.6rem);      /* the wordmark */
   --tracking-micro: 0.17em;      /* every label: uppercase serif, wide */
   --tracking-display: 0;         /* the display face is not tracked in */
 

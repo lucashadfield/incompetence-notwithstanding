@@ -115,9 +115,31 @@ with; red is the historically correct second colour and it is what makes the
 initial work.
 
 Type: **Spectral** for body copy at `1.0625rem/1.66`, **Cormorant Garamond**
-for display (title, headings, entry titles, archive rows), **Space Mono** for
-code and the email address only. No sans-serif anywhere. Every label is
-`.u-micro`: serif, uppercase, `0.72rem`, `0.17em` tracking.
+for display (page titles, headings, entry titles, archive rows), **Space Mono**
+for code only. No sans-serif anywhere. Every label is `.u-micro`: serif,
+uppercase, `0.72rem`, `0.17em` tracking.
+
+**One type scale, and nothing outside it.** No rule sets a bare rem size for
+type that has a level; if a new element needs a size, it takes a token or the
+scale gets a new one.
+
+| Token | Value | Used by |
+|---|---|---|
+| `--t-h1` | `clamp(1.55rem, 1.25rem + 1.1vw, 2.1rem)` | every page title: the homepage statement, post titles, list/archive/tag/search titles, 404 |
+| `--t-h2` | `1.55rem` | prose `h2`, contents-plate titles, archive year labels |
+| `--t-h3` | `1.25rem` | prose `h3`, archive rows, tag names, prev/next, search results and the search field |
+| `--t-h4` | `0.95rem` | the uppercase subhead inside prose |
+| `--t-lead` | `1.075rem` | standfirst |
+| `--t-body` | `1.0625rem` | body copy |
+| `--t-small` | `0.85rem` | entry blurbs, tables, footnotes, figure captions, the email address |
+| `--t-code` | `0.8125rem` | code blocks |
+| `--t-micro` | `0.72rem` | every label, kicker and meta line |
+| `--t-mast` | `clamp(1.25rem, 1rem + 1vw, 1.6rem)` | the wordmark |
+
+`--t-h1` used to be `clamp(2.1rem → 3.1rem)` for post titles while the homepage
+statement had its own smaller ramp, so the two pages disagreed by a full step.
+The post title now takes the homepage size, and `--t-h1` at 2.1rem is the
+largest type on the site.
 
 Layout tokens: `--wrap: 52rem` (masthead, footer, index pages) and `--measure:
 35rem` (the reading column). Article-width pages get the measure by overriding

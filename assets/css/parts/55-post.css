@@ -70,7 +70,7 @@
 .post-nav__title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 1.15rem;
+  font-size: var(--t-h3);
   line-height: 1.2;
   margin-top: 0.15rem;
 }

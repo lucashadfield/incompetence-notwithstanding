@@ -20,7 +20,7 @@
 .hero__title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: clamp(1.55rem, 1.25rem + 1.1vw, 2.1rem);
+  font-size: var(--t-h1);
   line-height: 1.15;
   /* no measure and no balancing: the column width and the float are the only
      things that should decide where this breaks */
@@ -41,7 +41,6 @@
   /* .prose carries a 2–3rem bottom pad for article pages; here the contact bar
      follows immediately */
   padding-block: clamp(0.6rem, 1.2vw, 1rem) 0 !important;
-  font-size: 1rem;
 }
 .hero__prose > p:first-child { margin-top: 0; }
 .hero__prose > * + * { margin-top: 0.9em; }

@@ -42,7 +42,7 @@
   border: 0;
   background: none;
   outline: none;
-  font-size: 1.05rem;
+  font-size: var(--t-body);
   padding-block: 0.25rem;
 }
 .search-field__input::placeholder { color: var(--ink-3); }
@@ -56,7 +56,7 @@
   padding: 1rem 1.15rem;
   max-width: 640px;
 }
-.search-field--page .search-field__input { font-size: 1.15rem; }
+.search-field--page .search-field__input { font-size: var(--t-h3); }
 
 .search-results { list-style: none; max-height: min(52vh, 460px); overflow-y: auto; }
 .search-results--page { max-height: none; margin: 2rem auto 0; max-width: 640px; }
@@ -85,11 +85,11 @@
 .search-results li a:hover::before,
 .search-results li a.is-active::before { transform: scaleY(1); }
 
-.search-result__title { font-family: var(--font-display); font-weight: 500; font-size: 1.1rem; letter-spacing: -0.025em; line-height: 1.2; }
+.search-result__title { font-family: var(--font-display); font-weight: 500; font-size: var(--t-h3); line-height: 1.2; }
 .search-result__meta { margin-top: 0.25rem; }
 .search-result__snippet {
   margin-top: 0.35rem;
-  font-size: 0.875rem;
+  font-size: var(--t-small);
   line-height: 1.5;
   color: var(--ink-2);
   display: -webkit-box;
