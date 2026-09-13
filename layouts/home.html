@@ -2,25 +2,32 @@
 {{- $posts := where site.RegularPages "Section" "in" site.Params.mainSections }}
 
 {{- /* The front matter is the about copy: there is no separate /about/ page.
-       Portrait, statement, then the contents list. */}}
-<section class="hero wrap wrap--measure">
-  <h1 class="hero__title">{{ site.Params.intro | replaceRE ` (\w+)$` ` <span class="hero__dim">$1</span>` | safeHTML }}</h1>
+       Two columns so the whole block stays inside one screen — portrait and
+       contact on the left, statement and copy on the right. */}}
+<section class="hero wrap">
+  <div class="hero__grid">
+    <div class="hero__aside">
+      {{- /* From assets/, not the page bundle: a branch-bundle resource is
+             always copied into public/ whether it is referenced or not, so the
+             130 KB original shipped alongside its own derivatives. */}}
+      {{- with .Params.portrait }}
+      {{- with resources.Get . }}
+      {{- $sq := .Fill "288x288 Center webp q85" }}
+      {{- $sq2 := .Fill "576x576 Center webp q82" }}
+      <figure class="portrait">
+        <img src="{{ $sq.RelPermalink }}" srcset="{{ $sq.RelPermalink }} 288w, {{ $sq2.RelPermalink }} 576w"
+             sizes="144px" width="144" height="144" alt="{{ site.Params.author }}" loading="eager" decoding="async">
+      </figure>
+      {{- end }}
+      {{- end }}
+      {{- if .Params.social }}{{ partial "social.html" . }}{{ end }}
+    </div>
 
-  {{- /* From assets/, not the page bundle: a branch-bundle resource is always
-         copied into public/ whether it is referenced or not, so the 130 KB
-         original shipped alongside its own derivatives. */}}
-  {{- with .Params.portrait }}
-  {{- with resources.Get . }}
-  {{- $sq := .Fill "320x320 Center webp q85" }}
-  {{- $sq2 := .Fill "640x640 Center webp q82" }}
-  <figure class="portrait">
-    <img src="{{ $sq.RelPermalink }}" srcset="{{ $sq.RelPermalink }} 320w, {{ $sq2.RelPermalink }} 640w"
-         sizes="168px" width="168" height="168" alt="{{ site.Params.author }}" loading="eager" decoding="async">
-  </figure>
-  {{- end }}
-  {{- end }}
-
-  {{- with .Content }}<div class="prose hero__prose">{{ . }}</div>{{ end }}
+    <div class="hero__body">
+      <h1 class="hero__title">{{ site.Params.intro | replaceRE ` (\w+)$` ` <span class="hero__dim">$1</span>` | safeHTML }}</h1>
+      {{- with .Content }}<div class="prose hero__prose">{{ . }}</div>{{ end }}
+    </div>
+  </div>
   <div class="orn orn--head" aria-hidden="true">{{ partial "ornament.html" . }}</div>
 </section>
 
@@ -31,8 +38,4 @@
   {{ partial "entry.html" (dict "page" $p "index" (sub $total $i)) }}
   {{- end }}
 </section>
-
-{{- if .Params.social }}
-<div class="wrap wrap--measure">{{ partial "social.html" . }}</div>
-{{- end }}
 {{ end }}

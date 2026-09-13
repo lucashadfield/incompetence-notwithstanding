@@ -1,72 +1,51 @@
-/* ── elsewhere: contact + profile module ──────────────────────────────────
-   One box, two rows: the address on top, the profile marks in a divided strip
-   beneath — the same hairline-divided-cell idiom as the header's icon buttons,
-   but drawn as a single unit rather than four separate chips.
-
-   Sits under the article, centred, capped at 17rem. No brand colours and no
-   palette tints any more — the five cover-art tints went with the covers, so
-   a cell simply washes and the mark turns rubric on hover.
+/* ── contact row ──────────────────────────────────────────────────────────
+   The address over a hairline-ruled strip of marks, sitting under the
+   portrait in the homepage masthead block. No heading and no border box: it
+   is the third element in a two-column header, and a panel there read as
+   clutter. Replaced a bordered "Elsewhere" module with five palette tints,
+   which went when the cover art did.
    ---------------------------------------------------------------------- */
-.social__label { margin-bottom: 0.7rem; }
-
-.social__box {
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius);
-  background: var(--paper-raised);
-  overflow: hidden;          /* keeps the tint fills inside the square corners */
-}
-
-/* ── address row ── */
-.social__mail {
+.social {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
-  padding: 0.75rem 0.85rem;
-  border-bottom: 1px solid var(--rule);
-  color: var(--ink);
-  text-decoration: none;
-  transition: background 0.2s var(--ease), color 0.2s var(--ease);
-}
-.social__mail:hover { background: var(--wash); color: var(--rubric); }
-.social__mail-icon { display: grid; place-items: center; flex-shrink: 0; }
-.social__mail-addr {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  min-width: 0;
-  overflow-wrap: anywhere;
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 13rem;
 }
 
-/* ── marks strip ── */
+.social__mail {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  text-align: center;
+  text-transform: none;          /* an address is not a label */
+  letter-spacing: 0.01em;
+  color: var(--ink-2);
+  font-size: 0.8rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--rubric) 30%, transparent);
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.social__mail:hover { color: var(--rubric); border-bottom-color: var(--rubric); }
+.social__mail[data-copied] { color: var(--rubric); }
+
+/* the marks: a rubric hairline above and below, cells divided by hairlines —
+   the same two-rule idiom as the contents plates, at strip scale */
 .social__marks {
   display: flex;
+  justify-content: center;
+  width: 100%;
   list-style: none;
-  margin: 0;
-  padding: 0;
+  border-block: 1px solid color-mix(in srgb, var(--rubric) 28%, transparent);
 }
-/* li stretches to the tallest cell; `a` must fill it, or the hover tint stops
-   short under the smaller glyphs (the LinkedIn square is 16px, not 18px) */
 .social__marks li { flex: 1 1 0; min-width: 0; display: flex; }
-.social__marks li + li { border-left: 1px solid var(--rule); }
+.social__marks li + li { border-left: 1px solid var(--rule-2); }
 .social__marks a {
   flex: 1;
   display: grid;
   place-items: center;
-  padding: 0.7rem 0;
-  color: var(--ink);
-  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  padding: 0.45rem 0;
+  color: var(--ink-2);
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
 }
-.social__marks a:hover { background: var(--wash); color: var(--rubric); }
+.social__marks a:hover { color: var(--rubric); background: var(--wash); }
 .social__marks a:focus-visible { outline-offset: -3px; }
-
-/* ── placement ────────────────────────────────────────────────────────────
-   Under the article. Capped so a three-cell strip doesn't stretch the full
-   reading measure and go limp. */
-.social {
-  margin: clamp(0.5rem, 1.5vw, 1rem) auto 0;
-  padding-bottom: clamp(3rem, 6vw, 5rem);
-  max-width: 17rem;
-  text-align: center;
-}
-.social__label { text-align: center; }

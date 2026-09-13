@@ -1,11 +1,3 @@
-<footer class="site-footer">
-  <div class="wrap site-footer__inner u-micro">
-    {{- $from := string site.Params.since }}{{ $to := now.Format "2006" }}
-    <p class="site-footer__id">{{ site.Title }} — {{ $from }}{{ if ne $from $to }}&thinsp;–&thinsp;{{ $to }}{{ end }}</p>
-    <ul class="site-footer__links">
-      {{- range site.Menus.main }}<li><a href="{{ .URL | relURL }}">{{ .Name }}</a></li>{{ end }}
-      <li><a href="{{ "/search/" | relURL }}">Search</a></li>
-      {{- with site.Home.OutputFormats.Get "rss" }}<li><a href="{{ .RelPermalink }}">RSS</a></li>{{ end }}
-    </ul>
-  </div>
-</footer>
+{{- /* An end block, deliberately empty: every link it used to hold is in the
+       masthead, and repeating them was the only thing it did. */ -}}
+<footer class="site-footer" aria-hidden="true"></footer>

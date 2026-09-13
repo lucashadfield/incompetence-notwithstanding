@@ -39,7 +39,7 @@ layouts/
     ornament.html           the fleuron, as inline SVG
     corner.html             the vine flourish on a contents plate
     entry.html              one framed plate in a contents list (replaced tile.html)
-    social.html             the "Elsewhere" module, on the home page
+    social.html             the contact row under the portrait
     post_nav.html           prev / next, titles only
     func/roman.html         roman numeral for the contents list
     func/tagname.html       tag display name (acronym-safe)
@@ -126,8 +126,18 @@ share `.wrap`.
 
 There is no separate `/about/` page: the home page carries the statement, a
 round portrait and the about copy from `content/_index.md`, then the contents
-list, then the Elsewhere module. One page fewer to maintain, and the first
-thing a reader sees is who is writing.
+list. One page fewer to maintain, and the first thing a reader sees is who is
+writing.
+
+The masthead block is **two columns** — portrait and contact row on the left in
+a 144px track, statement and copy on the right — collapsing to one centred
+column below 720px. It was one centred column with a 2.6rem title, which put
+the contents list below the fold on a laptop.
+
+Navigation lives in exactly one place, the site header: menu entries, Search
+and RSS. `_partials/footer.html` is an empty end block — a band of paper with
+a rule. It used to repeat the same five links and a copyright line, which was
+all it did.
 
 The masthead sets each word's initial one size up (`.wordmark__cap`, applied by
 a `replaceRE` in `_partials/header.html`) so the uppercase wordmark reads as
@@ -136,10 +146,11 @@ ones look like shrunken capitals.
 
 A contents entry is a framed plate: hairline double frame, a vine flourish in
 each corner (`_partials/corner.html`, one SVG rotated four times), the title in
-the display face. Hover moves the emphasis rather than adding to it — the frame
-and flourishes fall back to grey, the plate lifts to `--paper-raised`, and the
-colour transfers to the title. With everything rubric on hover the page read as
-a stack of competing blocks. Below 520px the flourishes are hidden; at 40px on
+the display face. Hover darkens the plate to `--sunken` with a 1px box-shadow
+in the same colour, so the 4px gutter between the two frame rules fills too,
+drops the frame and flourishes to grey, and moves the rubric onto the title.
+The first version lifted to `--paper-raised`, which is a 3% step off the page
+and read as no change at all. Below 520px the flourishes are hidden; at 40px on
 a ~290px plate they crowd the text instead of framing it.
 
 The body column is centre-axis: title block, kicker, standfirst, ornaments,
@@ -236,9 +247,9 @@ What took several passes to get right, and is worth not re-deriving:
 ## No images (except one)
 
 The exception is `assets/img/portrait.jpg`, set as a book sets a frontispiece:
-168px, round, double-ruled with an ink hairline inside and a rubric ring
-outside, and slightly desaturated. Anything larger competes with the statement
-above it.
+144px, round, double-ruled with an ink hairline inside and a rubric ring
+outside, and slightly desaturated. It sits in the left column of the masthead
+block with the contact row under it.
 
 Otherwise there is no cover art, no tile grid, no `og:image`, and the feed carries no
 enclosure. Removing it took out `_partials/poster.html`,
@@ -282,8 +293,8 @@ kept as a record, since neither is reachable from any template.
   lower-cased tag. Hugo title-cases taxonomy terms, which turns `llms` into
   `Llms`; every surface goes through `_partials/func/tagname.html`, including a
   term page's own `<h1>`, which has to use `.Data.Term` rather than `.Title`.
-- Elsewhere links: `[[params.social]]` in `hugo.toml` (`name`, `url`, `icon`).
-  Turn the module on for a page with `social: true` — currently the home page. `mailto:` entries become
+- Contact links: `[[params.social]]` in `hugo.toml` (`name`, `url`, `icon`).
+  Turn the row on for a page with `social: true` — currently the home page. `mailto:` entries become
   the address row; everything else becomes an icon cell. Icons live in
   `_partials/icon.html`: GitHub and Letterboxd are
   [Simple Icons](https://simpleicons.org/) (CC0); LinkedIn and the envelope are

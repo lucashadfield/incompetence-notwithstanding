@@ -4,12 +4,11 @@
    a vine flourish in each corner in the spirit of the Goudy initial, the title
    in the display face.
 
-   Hover inverts the emphasis rather than adding to it: the rubric frame and
-   corners fall back to grey and the plate lifts onto the raised paper, so the
-   colour moves to the title instead. Without that, every plate shouted and the
-   page read as four competing blocks.
+   Hover darkens the whole plate to --sunken and drops the frame and corners to
+   grey, moving the colour onto the title. A lift to --paper-raised was the
+   first attempt and was invisible: it is a 3% step off the page colour.
    ---------------------------------------------------------------------- */
-.contents { padding-block: clamp(1.5rem, 3vw, 2.25rem) clamp(2.5rem, 5vw, 4rem); }
+.contents { padding-block: clamp(1.1rem, 2vw, 1.6rem) clamp(2.5rem, 5vw, 4rem); }
 .contents__label {
   text-align: center;
   padding-bottom: 1.4rem;
@@ -23,9 +22,12 @@
   margin: 0 auto clamp(1.25rem, 2.5vw, 1.75rem);
   padding: clamp(1.9rem, 3.5vw, 2.5rem) clamp(1.75rem, 4vw, 3rem);
   background: var(--paper);
-  transition: background 0.3s var(--ease);
+  transition: background 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
-.entry:hover { background: var(--paper-raised); }
+.entry:hover {
+  background: var(--sunken);
+  box-shadow: 0 0 0 1px var(--sunken);   /* fills the 4px gutter between the two frame rules */
+}
 
 /* the frame: an outer hairline and an inner one 4px inside it, drawn on one
    element so the corner flourishes can sit on top of both */
