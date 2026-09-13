@@ -1,8 +1,8 @@
 /* ── code ─────────────────────────────────────────────────────────────── */
 :root {
-  --code-bg: #1F2E2B;
-  --code-fg: #E7E9DD;
-  --code-dim: #849490;
+  --code-bg: #241F1A;
+  --code-fg: #ECE6D8;
+  --code-dim: #9A8F7F;
 }
 
 .prose :not(pre) > code {
@@ -44,7 +44,7 @@
   right: 0.5rem;
   padding: 0.3rem 0.55rem;
   font-size: var(--t-micro);
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: var(--tracking-micro);
   text-transform: uppercase;
   color: var(--code-dim);
@@ -55,23 +55,23 @@
 }
 pre:hover .code-copy, .code-copy:focus-visible { opacity: 1; }
 .code-copy:hover { color: var(--paper); border-color: var(--paper); }
-.code-copy[data-done="1"] { color: #A7D2B6; border-color: #A7D2B6; opacity: 1; }
+.code-copy[data-done="1"] { color: #A9C39A; border-color: #A9C39A; opacity: 1; }
 
 /* chroma syntax — palette-matched */
 .chroma .c, .chroma .ch, .chroma .cm, .chroma .c1, .chroma .cs, .chroma .cp, .chroma .cpf { color: var(--code-dim); font-style: italic; }
-.chroma .k, .chroma .kc, .chroma .kd, .chroma .kn, .chroma .kp, .chroma .kr { color: #A9CFD2; }
-.chroma .kt, .chroma .nc, .chroma .nn, .chroma .no { color: #C3D3C3; }
+.chroma .k, .chroma .kc, .chroma .kd, .chroma .kn, .chroma .kp, .chroma .kr { color: #D9A08C; }
+.chroma .kt, .chroma .nc, .chroma .nn, .chroma .no { color: #C8BFA6; }
 .chroma .s, .chroma .sa, .chroma .sb, .chroma .sc, .chroma .dl, .chroma .sd, .chroma .s2, .chroma .se,
-.chroma .sh, .chroma .si, .chroma .sx, .chroma .sr, .chroma .s1, .chroma .ss { color: #E4C0A0; }
-.chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi, .chroma .il, .chroma .mo { color: #DCCFAE; }
-.chroma .nf, .chroma .fm { color: #DCCFAE; }
-.chroma .nb, .chroma .bp { color: #9FCFCB; }
-.chroma .nd, .chroma .nl, .chroma .nv, .chroma .vc, .chroma .vg, .chroma .vi { color: #C2C6B2; }
-.chroma .o, .chroma .ow, .chroma .p { color: #9FB3AE; }
-.chroma .nt { color: #8FC7CB; }
-.chroma .err { color: #E0A07E; }
-.chroma .gd { color: #E0A07E; }
-.chroma .gi { color: #A7D2B6; }
+.chroma .sh, .chroma .si, .chroma .sx, .chroma .sr, .chroma .s1, .chroma .ss { color: #BFCBB4; }
+.chroma .m, .chroma .mb, .chroma .mf, .chroma .mh, .chroma .mi, .chroma .il, .chroma .mo { color: #D8CBA8; }
+.chroma .nf, .chroma .fm { color: #D8CBA8; }
+.chroma .nb, .chroma .bp { color: #D2B79C; }
+.chroma .nd, .chroma .nl, .chroma .nv, .chroma .vc, .chroma .vg, .chroma .vi { color: #C6BCA6; }
+.chroma .o, .chroma .ow, .chroma .p { color: #A79C8B; }
+.chroma .nt { color: #D9A08C; }
+.chroma .err { color: #E0876A; }
+.chroma .gd { color: #E0876A; }
+.chroma .gi { color: #A9C39A; }
 .chroma .ge { font-style: italic; }
 .chroma .gs { font-weight: 600; }
 .chroma .lnt, .chroma .ln { color: color-mix(in srgb, var(--code-dim) 70%, transparent); margin-right: 0.6rem; }

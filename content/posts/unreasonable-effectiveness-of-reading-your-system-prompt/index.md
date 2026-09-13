@@ -5,9 +5,6 @@ draft: false
 tags: ["llms", "agents"]
 description: "I bet you haven't read it."
 summary: "A 10k-token system prompt is about 7,500 words, which is half an hour of reading. Nobody does it, and every time I have, I've come away with a cleaner prompt and a bump in evals."
-cover:
-  image: "cover.png"
-  alt: "The corner of a home office at night seen straight on: desk lamp lit, tower humming under the desk, one screen glowing, bookshelf of binders and paperbacks, window with the blinds half drawn, mug, sleeping speaker, cables pooled on the floor. The desk lamp's cable runs out through the window instead of to the wall."
 ---
 
 I bet you haven't read your system prompt.

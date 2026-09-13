@@ -1,0 +1,18 @@
+{{- /*
+  One line in a contents list: roman number, title, summary, meta.
+  Replaces tile.html, which existed to carry a cover image.
+  Params: page, index (1-based position in the list, optional)
+*/ -}}
+{{- $p := .page -}}
+<a class="entry" href="{{ $p.RelPermalink }}">
+  {{- with .index }}<span class="entry__no">{{ partial "func/roman.html" . }}</span>{{ end }}
+  <span class="entry__title">{{ $p.Title }}</span>
+  {{- with ($p.Description | default ($p.Summary | plainify | truncate 180)) }}
+  <span class="entry__desc">{{ . }}</span>
+  {{- end }}
+  <span class="entry__meta u-micro">
+    <time datetime="{{ $p.Date.Format "2006-01-02" }}">{{ $p.Date.Format site.Params.dateFormat }}</time>
+    {{- with $p.Params.tags }}<span class="dot" aria-hidden="true"></span><span>{{ range $i, $t := (first 3 .) }}{{ if $i }}, {{ end }}{{ partial "func/tagname.html" $t }}{{ end }}</span>{{ end }}
+    {{- if site.Params.showReadingTime }}<span class="dot" aria-hidden="true"></span><span>{{ $p.ReadingTime }} min read</span>{{ end }}
+  </span>
+</a>

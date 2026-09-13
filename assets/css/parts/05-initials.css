@@ -1,0 +1,64 @@
+/* ── ornate initials ──────────────────────────────────────────────────────
+   Goudy Initialen (Frederic Goudy, 1913, for Cloister), one file per letter:
+   each TTF holds a single glyph, so `unicode-range` makes a page fetch only
+   the initial it actually uses — ~8 KB instead of 420 KB.
+
+   Files live in static/fonts/goudy/ rather than assets/, because the URLs are
+   written by hand here rather than resolved by Hugo. They are referenced from
+   the site root, so a baseURL with a path prefix would need these rewritten.
+
+   The glyph's ink IS the block: the letter and the filigree are counters, so
+   the block takes the rubric colour and the page shows through the ornament.
+   ---------------------------------------------------------------------- */
+
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-A.ttf') format('truetype');unicode-range:U+0041;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-B.ttf') format('truetype');unicode-range:U+0042;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-C.ttf') format('truetype');unicode-range:U+0043;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-D.ttf') format('truetype');unicode-range:U+0044;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-E.ttf') format('truetype');unicode-range:U+0045;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-F.ttf') format('truetype');unicode-range:U+0046;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-G.ttf') format('truetype');unicode-range:U+0047;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-H.ttf') format('truetype');unicode-range:U+0048;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-I.ttf') format('truetype');unicode-range:U+0049;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-J.ttf') format('truetype');unicode-range:U+004A;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-K.ttf') format('truetype');unicode-range:U+004B;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-L.ttf') format('truetype');unicode-range:U+004C;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-M.ttf') format('truetype');unicode-range:U+004D;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-N.ttf') format('truetype');unicode-range:U+004E;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-O.ttf') format('truetype');unicode-range:U+004F;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-P.ttf') format('truetype');unicode-range:U+0050;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-Q.ttf') format('truetype');unicode-range:U+0051;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-R.ttf') format('truetype');unicode-range:U+0052;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-S.ttf') format('truetype');unicode-range:U+0053;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-T.ttf') format('truetype');unicode-range:U+0054;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-U.ttf') format('truetype');unicode-range:U+0055;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-V.ttf') format('truetype');unicode-range:U+0056;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-W.ttf') format('truetype');unicode-range:U+0057;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-X.ttf') format('truetype');unicode-range:U+0058;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-Y.ttf') format('truetype');unicode-range:U+0059;font-display:block}
+@font-face{font-family:'Goudy Initialen';src:url('/fonts/goudy/GoudyInitialen-Z.ttf') format('truetype');unicode-range:U+005A;font-display:block}
+
+/* the drop cap: initial-letter where supported (Chrome, Safari — correct
+   cap-height alignment and line sinking), float fallback for Firefox.
+   font-weight is pinned: synthetic bold fills in the white filigree and the
+   block renders as a plain red slab. */
+.prose--dropcap > p:first-of-type::first-letter {
+  font-family: 'Goudy Initialen';
+  color: var(--rubric);
+  font-weight: 400;
+  font-synthesis: none;
+  font-style: normal;
+  line-height: 1;
+  margin-right: 0.26em;
+}
+@supports (initial-letter: 3) {
+  .prose--dropcap > p:first-of-type::first-letter { initial-letter: 3; }
+}
+@supports not (initial-letter: 3) {
+  .prose--dropcap > p:first-of-type::first-letter {
+    float: left;
+    font-size: 4.5em;
+    line-height: 0.79;
+    padding-top: 0.02em;
+  }
+}

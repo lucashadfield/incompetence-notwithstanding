@@ -1,76 +1,63 @@
-/* ── list / archive / taxonomy pages ──────────────────────────────────── */
-.list-head { margin-bottom: clamp(2rem, 4vw, 3rem); }
-.layout--archives .list-head,
-.layout--search .list-head { margin-bottom: clamp(1rem, 2vw, 1.5rem); }
-.layout--archives .list-head .rule { margin-bottom: 0; }
+/* ── index pages: tag lists, archive, taxonomy ───────────────────────── */
+.list-head { text-align: center; margin-bottom: clamp(1.5rem, 3vw, 2.25rem); }
 .list-head__title {
   font-family: var(--font-display);
   font-weight: 500;
   font-size: var(--t-h1);
-  line-height: 1.08;
-  letter-spacing: var(--tracking-display);
-  margin-top: 0.65rem;
+  line-height: 1.06;
+  margin-top: 0.55rem;
 }
-.list-head__count { margin-top: 1.25rem; }
-.list-head .prose { padding-block: 1rem 0; }
+.list-head__count { margin-top: 1rem; }
+.list-head .prose { padding-block: 1rem 0; margin-inline: auto; }
 
-/* archive */
-.archive-year {
-  display: grid;
-  grid-template-columns: 7rem minmax(0, 1fr);
-  gap: clamp(1rem, 3vw, 2.5rem);
-  padding-block: clamp(1.5rem, 3vw, 2.5rem);
-  border-top: 1px solid var(--rule);
-}
-.archive-year:last-child { border-bottom: 1px solid var(--rule); }
+/* archive — year as a centred rubric label, then the rows */
+.archive-year { padding-block: clamp(1.25rem, 2.5vw, 2rem) 0.5rem; }
 .archive-year__label {
-  font-family: var(--font-mono);
-  font-weight: 400;
-  font-size: 1.25rem;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.6rem;
   line-height: 1;
-  color: var(--ink-3);
-  position: sticky;
-  top: calc(var(--header-h) + 1.5rem);
+  color: var(--rubric);
+  text-align: center;
+  padding-bottom: 0.9rem;
 }
 .archive-list { list-style: none; }
 .archive-row a {
   display: grid;
-  grid-template-columns: 5rem minmax(0, 1fr) auto;
+  grid-template-columns: 5.5rem minmax(0, 1fr) auto;
   gap: 1.25rem;
   align-items: baseline;
-  padding-block: 0.9rem;
-  border-bottom: 1px solid var(--rule);
+  padding-block: 0.85rem;
+  border-bottom: 1px solid var(--rule-2);
   transition: background 0.25s var(--ease);
 }
-.archive-list li:last-child a { border-bottom: 0; }
-.archive-row a:hover { background: color-mix(in srgb, var(--wash) 60%, transparent); }
+.archive-list li:first-child a { border-top: 1px solid var(--rule-2); }
+.archive-row a:hover { background: var(--wash); }
 .archive-row__title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: 1.15rem;
+  font-size: 1.3rem;
   line-height: 1.2;
-  letter-spacing: -0.025em;
 }
-.archive-row a:hover .archive-row__title { color: var(--accent); }
+.archive-row a:hover .archive-row__title { color: var(--rubric); }
 .archive-row__meta { color: var(--ink-3); }
 
-/* tags index */
-.term-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; list-style: none; }
+/* tags index — text list, no chips: the chip tints are gone with the covers */
+.term-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem 1.6rem;
+  list-style: none;
+}
 .term a {
   display: inline-flex;
   align-items: baseline;
-  gap: 0.7rem;
-  padding: 0.5rem 0.9rem;
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius);
-  background: var(--paper-raised);
-  transition: border-color 0.2s var(--ease), background 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
+  gap: 0.45rem;
+  padding-block: 0.35rem;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
 }
-.term a:hover { border-color: var(--ink); background: var(--wash); box-shadow: 4px 4px 0 var(--tint, var(--mist)); transform: translate(-2px, -2px); }
-.term:nth-child(5n+1) { --tint: var(--mist); }
-.term:nth-child(5n+2) { --tint: var(--peach); }
-.term:nth-child(5n+3) { --tint: var(--sage); }
-.term:nth-child(5n+4) { --tint: var(--sand); }
-.term:nth-child(5n+5) { --tint: var(--stone); }
-.term__name { font-family: var(--font-display); font-weight: 500; font-size: 1.05rem; letter-spacing: -0.02em; line-height: 1; }
-.term__count { color: var(--ink-3); }
+.term a:hover { color: var(--rubric); border-bottom-color: color-mix(in srgb, var(--rubric) 45%, transparent); }
+.term__name { font-family: var(--font-display); font-weight: 500; font-size: 1.3rem; line-height: 1; }
+.term__count { color: var(--ink-3); font-variant-numeric: lining-nums; }

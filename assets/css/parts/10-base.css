@@ -2,20 +2,20 @@
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 1.5rem); }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
 
 body {
   background: var(--paper);
   color: var(--ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--t-body);
   font-weight: 400;
-  line-height: 1.62;
-  font-feature-settings: "kern", "liga", "ss01", "ss03";
+  line-height: 1.66;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
-  /* sticky footer: content shorter than the viewport still ends flush */
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -30,13 +30,9 @@ ul, ol { padding: 0; }
 
 a { color: inherit; text-decoration: none; }
 
-::selection { background: var(--accent); color: var(--paper); }
+::selection { background: var(--rubric); color: var(--paper); }
 
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 1px;
-}
+:focus-visible { outline: 2px solid var(--rubric); outline-offset: 3px; }
 
 .wrap {
   width: 100%;
@@ -44,11 +40,12 @@ a { color: inherit; text-decoration: none; }
   margin-inline: auto;
   padding-inline: var(--gutter);
 }
+.wrap--measure { max-width: var(--measure); }
 
-.main { display: block; min-height: 60vh; flex: 1; }
+.main { display: block; min-height: 55vh; flex: 1; }
 
-.section { padding-block: clamp(2.25rem, 4.5vw, 4rem); }
-.section--top { padding-top: clamp(2rem, 3vw, 3rem); }
+.section { padding-block: clamp(2rem, 4vw, 3.25rem); }
+.section--top { padding-top: clamp(2.25rem, 4vw, 3.5rem); }
 
 .skip-link {
   position: absolute;
@@ -61,9 +58,10 @@ a { color: inherit; text-decoration: none; }
 }
 .skip-link:focus { left: 1rem; }
 
-/* micro type — mono, uppercase, wide. Every label on the site uses this. */
+/* every label on the site: serif, uppercase, widely tracked. There is no
+   sans-serif and no mono outside code blocks. */
 .u-micro {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--t-micro);
   font-weight: 400;
   letter-spacing: var(--tracking-micro);
@@ -72,66 +70,57 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.5;
 }
 .u-micro a { color: inherit; transition: color 0.25s var(--ease); }
-.u-micro a:hover { color: var(--accent); }
+.u-micro a:hover { color: var(--rubric); }
 
 .dot {
   display: inline-block;
-  width: var(--pixel);
-  height: var(--pixel);
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
   background: currentColor;
-  opacity: 0.5;
-  vertical-align: 0.15em;
-  margin-inline: 0.2rem;
+  opacity: 0.55;
+  vertical-align: 0.3em;
+  margin-inline: 0.45rem;
 }
 
-/* 1-bit dither wash — the only “texture” in the system, used behind flat
-   colour blocks so they don't read as plain CSS rectangles */
-.dither::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image: repeating-conic-gradient(var(--ink) 0% 25%, transparent 0% 50%);
-  background-size: var(--pixel) var(--pixel);
-  opacity: 0.06;
-}
-
-.rule {
-  border: 0;
-  height: 1px;
-  background: var(--rule);
-  margin-block: clamp(1.75rem, 3vw, 2.75rem);
-}
-.rule--accent { position: relative; overflow: visible; }
+.rule { border: 0; height: 1px; background: var(--rule); margin-block: clamp(1.5rem, 3vw, 2.25rem); }
+/* the structural rule: a hairline with a short rubric segment centred on it */
+.rule--accent { position: relative; background: var(--rule-2); overflow: visible; }
 .rule--accent::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: -1px;
-  width: 64px;
-  height: var(--pixel);
-  background: var(--accent);
+  left: 50%;
+  top: 0;
+  width: 4rem;
+  height: 1px;
+  transform: translateX(-50%);
+  background: var(--rubric);
+  opacity: 0.55;
 }
+
+/* ── ornaments ─────────────────────────────────────────────────────────
+   Drawn as inline SVG in _partials/ornament.html rather than set as a
+   Unicode dingbat: U+2766 is missing from both text faces and fell back to
+   whatever the OS had, which was a blob. */
+.orn { display: flex; justify-content: center; color: var(--rubric); }
+.orn--head { margin-top: 1.5rem; }
+.orn svg { width: 74px; height: 12px; }
 
 .icon-btn {
   display: inline-grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--rule-strong);
-  border-radius: var(--radius);
+  width: 30px;
+  height: 30px;
   color: var(--ink-2);
-  transition: border-color 0.2s var(--ease), color 0.2s var(--ease), background 0.2s var(--ease), box-shadow 0.2s var(--ease), transform 0.2s var(--ease);
+  transition: color 0.2s var(--ease);
 }
-.icon-btn:active { transform: translate(2px, 2px); box-shadow: none; }
-.icon-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--wash); }
+.icon-btn:hover { color: var(--rubric); }
 
 kbd {
   font-family: var(--font-mono);
   font-size: 0.72em;
   border: 1px solid var(--rule-strong);
   border-bottom-width: 2px;
-  border-radius: 3px;
   padding: 0.1em 0.35em;
   background: var(--paper-raised);
   color: var(--ink-2);

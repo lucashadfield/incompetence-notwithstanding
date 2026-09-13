@@ -2,27 +2,30 @@
 
 A blog about language models and adjacent things. Static site built with
 [Hugo](https://gohugo.io/) on a bespoke theme — no third-party theme, nothing
-to override. The look: calm pastels on warm paper, one typeface, square
-corners, a 1-bit dither for texture, and 90s-flavoured cover illustrations that
-carry all the colour.
+to override. The look: a printed book. Warm paper, Spectral for body copy,
+Cormorant Garamond for display, black text with a rubric red for structure, an
+ornate Goudy initial at the head of every post, and **no images anywhere**.
 
 ## Layout
 
 ```
 content/
   posts/                    one page bundle per post
-    first-post/             index.md + cover.svg (page resources)
+    first-post/index.md
   _index.md                 section stub — `build: {render: never}`, /posts/ is not a page
-  about.md                  /about/
+  about/index.md            /about/
   archives.md               /archives/   (layout: archives)
   search.md                 /search/     (layout: search)
-tools/upload_server.py      phone → box image upload, for covers
+tools/
+  clockwork_initials.py     mechanical drop-cap generator — NOT part of the build
+  fonts/                    a font the generator needs; never shipped to a browser
+  upload_server.py          phone → box image upload (legacy, from the cover-art era)
 layouts/
   baseof.html               shell: header, main, footer, search overlay
-  home.html                 hero statement + tiles
-  posts/single.html         post: full-bleed cover, single centred column
+  home.html                 centred statement + the contents list
+  posts/single.html         post: running head, centred title block, drop cap
   single.html               standalone pages (about)
-  list.html                 tag term pages (tile grid)
+  list.html                 tag term pages (contents list)
   taxonomy.html             /tags/
   archives.html             year-grouped index
   search.html               /search/ page
@@ -33,20 +36,22 @@ layouts/
   _markup/                  render hooks: image, link, heading
   _partials/
     head, header, footer, scripts, icon
-    social.html             the "Elsewhere" module (right column)
-    poster.html             cover image (raster srcset, pastel fallback)
-    tile.html               homepage / list card
-    post_nav.html           prev / next
-    func/cover_resource.html
+    ornament.html           the fleuron, as inline SVG
+    entry.html              one line of a contents list (replaced tile.html)
+    social.html             the "Elsewhere" module on /about/
+    post_nav.html           prev / next, titles only
+    func/roman.html         roman numeral for the contents list
     func/tagname.html       tag display name (acronym-safe)
 assets/
   css/parts/*.css           concatenated in filename order → one stylesheet
-  js/site.js                nav, search, reading progress, code copy
+  js/site.js                search, back-to-top, code copy, email copy
   js/vendor/fuse.basic.min.js
-  img/favicon.svg           the wordmark mark: ink square + accent-teal offset shadow
-  img/favicon-32.png        raster fallback (transparent)
+  img/favicon.svg           the Goudy "I" block
+  img/favicon-32.png        raster fallback, rasterised from the SVG
   img/apple-touch-icon.png  180×180, paper-filled (iOS composites on black)
-  fonts/*.woff2             self-hosted Space Grotesk + Space Mono
+  fonts/*.woff2             Spectral, Cormorant Garamond, Space Mono
+static/
+  fonts/goudy/*.ttf         26 single-glyph initial files (see below)
 hugo.toml
 ```
 
@@ -90,70 +95,142 @@ and type sizes are defined.
 
 | Token | Value | Used for |
 |---|---|---|
-| `--paper` | `#FAF6EA` | page background — warm cream a touch above the cover art's own ground (`#F0EDD6`), so illustrations read as slightly deeper panels rather than dissolving into the page. Mirrored in the hardcoded `theme-color` meta in `_partials/head.html` — change both |
-| `--paper-raised` | `#FFFDF6` | panels, blockquotes, search overlay |
-| `--sunken` | `#EFEADA` | footer, image backing |
-| `--mist` `--peach` `--sage` `--sand` `--stone` | `#A9CFD2` `#E4C0A0` `#C3D3C3` `#DCCFAE` `#C2C6B2` | tints: hover shadows, tag chips, empty covers |
-| `--accent` | `#26706C` | the single accent: rules, links, hovers, progress bar. 5.4:1 on paper |
-| `--mark` / `--mark-shadow` | `#1F2E2B` / `#26706C` | logo square and its hard offset shadow: an ink chip casting a teal ghost |
-| `--ink` / `--ink-2` / `--ink-3` | `#1F2E2B` / `#4E635E` / `#8A9A94` | text, secondary, labels |
+| `--paper` | `#FCFAF4` | page background. Mirrored in the hardcoded `theme-color` meta in `_partials/head.html` — change both |
+| `--paper-2` | `#F7F3E9` | masthead and footer band |
+| `--paper-raised` / `--sunken` / `--wash` | `#FFFDF7` / `#F2EEE4` / `#F7F2E6` | panels, figure backing, hover |
+| `--ink` / `--ink-2` / `--ink-3` | `#1E1C1A` / `#4B4741` / `#8C857B` | text, secondary, labels |
+| `--rubric` | `#8A2F1F` | **structure**: initials, kickers, ornaments, list markers, rules. Aliased as `--accent`, which is what most rules still say |
+| `--link` | `#2F5D57` | running-text links only, so they do not read as rubrication |
 
-The palette is sampled from the ten covers in `covers/`, not chosen
-independently: median-cut quantisation over all ten images gives water blue,
-peach, sage, sand and olive stone as the recurring families, and deep
-slate-green as the outline ink.
+Two colours of ink, as a hand-press would have them. This replaced a pastel
+palette (`--mist`, `--peach`, `--sage`, `--sand`, `--stone`) and a teal accent
+that were median-cut sampled from ten cover illustrations. There are no
+illustrations any more, so there was nothing left for that palette to agree
+with; red is the historically correct second colour and it is what makes the
+initial work.
 
-The accent is the poolside cover's deepest water tone. Alternatives were
-measured and passed over: night-window blue-teal `#33595D` (7.1:1, too close to
-the current accent to be worth the change), foliage green `#1F4331` (10.2:1, so
-dark that links stop reading as links), wood brown `#755D46` (5.7:1 but only
-21% saturation, reads muddy), and terracotta `#8C4F2C` (5.9:1) — which was
-tried site-wide and pulled back to the logo alone. Nothing in the art is warm,
-dark and saturated at once, so a warm accent has to be extrapolated rather than
-sampled, and at link-text scale it fought the covers instead of complementing
-them.
+Type: **Spectral** for body copy at `1.0625rem/1.66`, **Cormorant Garamond**
+for display (title, headings, entry titles, archive rows), **Space Mono** for
+code and the email address only. No sans-serif anywhere. Every label is
+`.u-micro`: serif, uppercase, `0.72rem`, `0.17em` tracking.
 
-`--mark` is a separate pair so the logo can be recoloured without touching
-links. Two versions were rejected before the current one: solid accent with a
-pale-water shadow (teal on teal on cream — the mark had nothing to do), and
-terracotta on pale water (too much colour for a 10px square, and it read as a
-bathroom tile). It is now ink `#1F2E2B` with a teal `#26706C` ghost — a chip
-dark enough to hold its shape at 10px, with the accent doing the offset. Hover
-lightens the ghost to `--mist` and closes the offset by a pixel.
+Layout tokens: `--wrap: 52rem` (masthead, footer, index pages) and `--measure:
+35rem` (the reading column). Article-width pages get the measure by overriding
+`--wrap` on their own parts — `.post__runhead` / `.post__head` / `.post__main`
+/ `.post__foot` and `.page-single__grid` — which is why they can all still
+share `.wrap`.
 
-Type: **Space Grotesk** for everything — display, headings, body, UI — and
-**Space Mono**, its sibling, for labels, numbers and code. One family, no
-serif/sans pairing. Self-hosted woff2 (~55 KB), preloaded, no external
-requests. Every label uses `.u-micro`: 11px mono, uppercase, `0.14em` tracking.
+The body column is centre-axis: title block, kicker, standfirst, ornaments,
+contents entries and archive year labels all centre; body copy is ragged right,
+never justified. CSS hyphenation is not good enough for justified setting at
+this measure.
 
-Layout tokens: `--wrap: 1240px` (page), `--measure: 42rem` (the reading
-column), and `--cover-ar: 21 / 9`, the single place every cover crop is
-defined. Post pages have no TOC rail: body copy is one centred column.
+Ornaments are **inline SVG** (`_partials/ornament.html`), not Unicode
+dingbats: U+2766 and its relatives are missing from both text faces and fell
+back to whatever the OS had, which rendered as a blob.
 
-There is **one** measure, not two. `--measure` is both the article wrap and the
-`.prose` cap, so a rule drawn at wrap width always lands exactly where the text
-column ends. Article-width pages get it by overriding `--wrap` on their own
-parts — `.post__head` / `.post__main` / `.post__foot` and `.page-single__grid` —
-which is why they can all still share `.wrap`. Pages that keep the full 1240px
-wrap (home, tag lists, archive) rely on the `.prose` max-width instead.
+Light only, deliberately. No theme toggle to maintain.
 
-A standalone page carrying `social: true` gets a second column:
-`.page-single__grid--aside` widens `--wrap` to `--measure + 18.5rem` and grids
-it `[--measure] 3.5rem [15rem]`, centred as a unit, collapsing to one column
-below 1000px. The text column stays exactly `--measure`, so the accent rule
-still ends where the copy does. The trade-off is that `/about/` sits further
-left than a post does — the pair is centred, not the prose. The top padding
-lives on the grid rather than the header so the module's label starts level
-with the page kicker. This replaced a `--measure: 35rem` / `--post-wrap: 42rem`
-split plus a `.prose--narrow` class of `62ch`: three different measures, which
-left the accent rule on `/about/` running ~500px past the end of the text.
+## The drop cap
 
-Other rules the design leans on: `--radius: 0` (nothing is rounded), a `--pixel:
-4px` grid that hard offset shadows and accent bars snap to, and `.dither` — a
-4px checkerboard at 6% opacity, the only texture in the system.
+Goudy Initialen — Frederic Goudy, 1913, for the Cloister types — in rubric red
+at the head of every post. Turned on by `prose--dropcap` on the body div in
+`layouts/posts/single.html`; all the CSS is in `assets/css/parts/05-initials.css`.
 
-Light only, deliberately. The palette is the identity and there is no theme
-toggle to maintain.
+Three details do the work, and it will look broken if any is changed casually:
+
+- **One file per letter.** `static/fonts/goudy/GoudyInitialen-A.ttf` … `-Z.ttf`,
+  each holding a single glyph, declared as 26 `@font-face` rules with a
+  one-codepoint `unicode-range`. A page fetches only the initial it uses: ~8 KB
+  instead of the 420 KB set. They live in `static/` rather than `assets/`
+  because the URLs are written by hand in CSS rather than resolved by Hugo,
+  which also means a baseURL with a path prefix would need them rewritten.
+- **`initial-letter: 3`**, with a `float` fallback for Firefox behind
+  `@supports`. The float version needs its size and leading eyeballed;
+  `initial-letter` gets cap-height alignment and line sinking right for free.
+  Below 420px it drops to 2 lines, or the sunk cap eats a third of the column.
+- **`font-weight: 400; font-synthesis: none`** on the `::first-letter`. The
+  glyph's ink *is* the block and the letter and filigree are counters, so
+  synthetic bold fills the white lines in and the initial renders as a plain
+  red slab. This is also why the favicon works: filling the same path in rubric
+  on a paper ground gives the printed look directly.
+
+The favicon is that same Goudy `I`. `assets/img/favicon.svg` is the glyph
+outline filled `#8A2F1F` on a `#FCFAF4` rect; the PNG fallbacks are rasterised
+from it with headless Chrome, because PIL cannot render SVG:
+
+```bash
+# serve assets/img, point Chrome at a page containing <img src="favicon.svg" width=180>
+google-chrome --headless=new --disable-gpu --no-sandbox --hide-scrollbars \
+  --window-size=180,180 --screenshot=/tmp/fav180.png http://127.0.0.1:8907/fav-preview.html
+python3 -c "from PIL import Image; im=Image.open('/tmp/fav180.png').convert('RGB'); \
+  im.save('assets/img/apple-touch-icon.png'); \
+  im.resize((32,32), Image.LANCZOS).save('assets/img/favicon-32.png')"
+```
+
+Licensing: Goudy Initialen is a Dieter Steffmann digitisation, distributed
+free for personal use rather than under a libre licence. Fine for a personal
+blog; credited on `/about/`. Spectral, Cormorant Garamond and Space Mono are
+OFL.
+
+### tools/clockwork_initials.py
+
+A procedural alternative to Goudy, kept in the repo and **deliberately not
+wired into the build** — nothing in `layouts/` or `assets/` references it and no
+generated SVG is committed, so a browser never downloads any of it.
+
+```bash
+python3 tools/clockwork_initials.py /tmp/initials          # A.svg … Z.svg, rubric block
+python3 tools/clockwork_initials.py /tmp/initials open     # no ground, red on paper
+```
+
+It draws Goudy's *construction* with machinery instead of vines: a rubric
+block, a Playfair Display letter reversed out of it, and the field packed with
+meshed gears, drive belts, chains, con-rods, springs, washers and bolt heads.
+At 84px it reads as a dense ornamented block; the mechanism only resolves above
+~168px. Roughly 66 KB of SVG per letter, 16 KB gzipped. Needs `fontTools`
+(`apt install python3-fonttools`).
+
+What took several passes to get right, and is worth not re-deriving:
+
+- **Solid discs only below r7.** A large filled gear is the heaviest mark in
+  the block and beats the letter for attention; C, E, F, G and U read as a gear
+  with a letter next to it until large wheels were forced to hairline outlines.
+- **A gear train on a fixed ring, not a random scatter.** Wheels walk a
+  rectangular path 9 units in from the edge at `1.92r` spacing so consecutive
+  wheels mesh, skipping forward where the letter is in the way. Then two graded
+  interior passes (mid-size, then small) so the field has hierarchy.
+- **Letter clearance of 2.6 units**, enforced by sampling a ring of points
+  against the real outline with fontTools' `PointInsidePen`, which is what makes
+  it work for all 26 glyphs rather than a hand-packed `I`.
+- **Interlacing** is what stops the letter looking framed rather than
+  overgrown: a run is drawn in full *behind* the letter, then the stretch that
+  crosses a stroke is redrawn on top over a fat keyline in the ground colour.
+  A crossing must be a shaft between two train wheels that face each other
+  across the letter (axis-aligned within 5.5 units, ≥34 apart), and crossings
+  within 17 units of the block centre are rejected — a run through the middle of
+  a stem reads as a strikethrough. Springs are excluded from crossings; a coil
+  over a letter looks like a scribble.
+
+## No images
+
+There is no cover art, no tile grid, no `og:image`, and the feed carries no
+enclosure. Removing it took out `_partials/poster.html`,
+`_partials/func/cover_resource.html`, `_partials/tile.html`,
+`assets/css/parts/50-tiles.css`, the `[[cascade]]` block that kept 2.5 MB
+source PNGs out of `public/`, and the five palette tints.
+
+What remains: `_markup/render-image.html` still renders an in-post
+`![alt](file.png)` as a `.fig` figure with a webp srcset, so a chart or a
+screenshot inside a post works. Nothing decorative goes in.
+
+Link previews are therefore text-only (`twitter:card` is always `summary`). If
+that ever matters, the fix is a generated type-only card, not a return to
+illustration.
+
+The old cover library still exists at `covers/` and its Midjourney prompt
+recipe at `cover-prompts.md`, unreferenced by the build and not published —
+kept as a record, since neither is reachable from any template.
 
 ## Editing
 
@@ -161,239 +238,35 @@ toggle to maintain.
   ```bash
   hugo new content content/posts/my-post/index.md
   ```
-  Page bundle, so the cover lives next to `index.md`.
-- Cover image — frontmatter:
-  ```yaml
-  cover:
-    image: "cover.png"        # raster only — png / jpg / webp
-    alt: "Optional alt text"
-  ```
-  It becomes the full-bleed post header and the homepage tile, resized to webp
-  with a srcset automatically. A post with no cover falls back to a flat pastel
-  block, not a grey box.
-- Homepage statement: `intro` / `introKicker` in `hugo.toml`. The homepage has
-  no decorative art of its own — the tiles carry it.
-- Favicon: `assets/img/favicon.svg` is the same two squares as
-  `.wordmark__mark` (ink `#1F2E2B` square, accent-teal `#26706C` hard
-  shadow offset by 3/16 of the canvas). The PNG fallbacks are generated from
-  the same geometry with PIL — regenerate them if the mark changes:
-  ```python
-  from PIL import Image, ImageDraw
-  def draw(size, bg):
-      img = Image.new("RGBA", (size, size), bg); d = ImageDraw.Draw(img)
-      s, off, x0 = round(size*0.625), round(size*0.1875), round(size*0.09375)
-      d.rectangle([x0+off, x0+off, x0+off+s-1, x0+off+s-1], fill=(0x26,0x70,0x6C,255))  # --mark-shadow
-      d.rectangle([x0, x0, x0+s-1, x0+s-1], fill=(0x1F,0x2E,0x2B,255))  # --mark
-      return img
-  draw(32, (0,0,0,0)).save("assets/img/favicon-32.png")
-  draw(180, (0xFA,0xF6,0xEA,255)).convert("RGB").save("assets/img/apple-touch-icon.png")
-  ```
-- Nav: `[[menu.main]]` blocks in `hugo.toml`. There is no `/posts/` page — the
-  archive is the full index, and `content/posts/_index.md` carries
-  `build: {render: never, list: never}` so the section list page is never
-  emitted. Posts keep their `/posts/<slug>/` URLs; "all posts" links point at
-  `/archives/`. Hugo removed the old `_build` spelling in 0.145 — it must be
-  `build:`, or the build fails with a deprecation error.
+- Frontmatter that matters: `title`, `date`, `tags`, `description` (the
+  standfirst under the title *and* the meta description), `summary` (the
+  contents-list blurb).
+- Homepage statement: `intro` in `hugo.toml`. The last word is dimmed by a
+  `replaceRE` in `home.html`.
+- Contents numbering: `_partials/func/roman.html` turns the position into a
+  roman numeral (1–99). Hugo has no such function, and a contents page numbered
+  1, 2, 3 looks like a list of search results.
+- Nav: `[[menu.main]]` blocks in `hugo.toml`; the header appends Search itself.
+  There is no `/posts/` page — the archive is the full index, and
+  `content/posts/_index.md` carries `build: {render: never, list: never}`.
 - Search: fuse.js over `/index.json`, loaded lazily on first use. Press `/` or
   `⌘K` anywhere, or use `/search/`. Don't remove `home = [..., "JSON"]` from
-  `[outputs]` or the index disappears. `/search/` carries `noindex: true` and
-  `sitemap.disable` — a search box is not a search result.
+  `[outputs]` or the index disappears.
 - Tag display names: `[params.tagNames]` in `hugo.toml`, keyed by the
   lower-cased tag. Hugo title-cases taxonomy terms, which turns `llms` into
-  `Llms`; anything in the map wins, everything else falls back to title-casing.
-  Every surface goes through `_partials/func/tagname.html` — the taxonomy page,
-  the tile chips, the post kicker and the archive meta previously rendered the
-  same tag three different ways.
-- Elsewhere links: `[[params.social]]` in `hugo.toml` (`name`, `url`, `icon`,
-  `tint`). Turn the module on for a page with `social: true` in front matter;
-  `single.html` then renders `_partials/social.html` into a right-hand column.
-  It is chrome, not body copy, so it is rendered from the layout rather than a
-  shortcode inside `.prose` — an earlier shortcode version inherited the prose
-  list markers and link underlines.
-
-  One box, two rows: `mailto:` entries become the address row (Space Mono, the
-  address itself rather than the word "Email"), everything else becomes an
-  icon-only cell in a hairline-divided strip. `tint` is one of the five palette
-  families and fills that cell on hover — no brand colours, four foreign
-  palettes would swamp the page. Icons live in
-  `_partials/icon.html`: brand and contact marks are **filled**, unlike the
-  stroked utility icons, because a stroked Octocat does not exist. GitHub and
-  Letterboxd are [Simple Icons](https://simpleicons.org/) (CC0); LinkedIn and
-  the envelope are [Bootstrap Icons](https://icons.getbootstrap.com/) (MIT) —
-  Simple Icons dropped the LinkedIn mark on trademark request. LinkedIn renders
-  at 16px against the others' 18px: a solid square carries more ink and reads a
-  size larger at matched dimensions.
-- Feed: `layouts/home.rss.xml`. Posts only, full `.Content`, and the cover as
-  both an `<enclosure>` and the lead image. Hugo's built-in RSS enumerates every
-  regular page, so About / Archive / Search were showing up as items.
-- Social cards: `og:image` is a 1200×630 JPEG cropped from the cover by
-  `_partials/head.html`, never the original. The `[[cascade]]` block in
-  `hugo.toml` sets `build.publishResources = false` on `/posts/**` so the ~2.5 MB
-  source PNGs stop being copied into `public/` — derivatives still publish,
-  because their `.RelPermalink` is called. One post's output went 2.9 MB → 405 KB.
-
-## Cover art
-
-The library is `covers/` — ten 2400×1024 PNGs, the only illustrations the site
-uses. They are the source of the CSS palette, not the other way round:
-`cartographers-table`, `clock-tower-mechanism`, `darkroom-bench`,
-`flat-rooftop`, `robot-arm-bench`, `electronics-bench`, `observatory-dome`,
-`home-office-night`, `books-and-bookshelf`, `poolside-desk`. Copy one into a
-post bundle as `cover.png`. The originals (3376×1440, 5–9 MB each) stay in the
-gitignored `uploads/`; `covers/` holds the 2400-wide re-encodes, still above
-the 2200px hero srcset step, which cuts the set from ~62 MB to ~34 MB.
-
-The generation-ready prompts live in `cover-prompts.md` — 28 of them, one
-recipe, one scene sentence each. Read that file before writing a new one; the
-notes at its top record which clauses are keeping the frame and the cartoon out.
-
-Covers are **raster only** — PNG, JPG or WebP, no SVG. 21:9 landscape, 1680×720
-or larger. Tiles, feature tile and prev/next thumbnails all crop to `--cover-ar`
-(21:9); the post header is thinner still at 16:5 and capped at
-`min(30vh, 300px)`, so it never owns the first screen. Hugo resizes them to
-webp with a srcset automatically. A post with no cover gets a flat pastel block
-keyed off its title hash, so the grid never breaks.
-
-Composition: subject centred, nothing important within 8% of any edge (the post
-header crops ~30% vertically off a 21:9 source), low contrast — the tile title
-sits directly beneath the image.
-
-The covers are generated with Midjourney (v7). Prompt recipe: write one dense
-object list as the first sentence, then keep the rest verbatim so every cover
-matches. Hex codes are the site tokens; pair each with its colour name, since
-models read the name and treat the hex as a nudge.
-
-> Cheerful full-bleed high-key risograph illustration of **[SUBJECT]** in a
-> gentle three-quarter view: **[DENSE OBJECT LIST, chunky and rounded, with a
-> different palette colour named for each major object's body, every screen
-> switched on and filled with a flat glowing field of coral pink or mint
-> green]**. **[SECOND LIST filling the upper third: shelf, pegboard, hanging
-> cables, one plant described by leaf shape in flat pale sage, lit lamp]**.
-> Objects overlap in a dense friendly cluster, busy but calm, filling the canvas
-> edge to edge on warm cream paper. 1990s Japanese software packaging art
-> crossed with a cosy children's picture book. Loose hand-inked outlines with
-> slightly wobbly varying line weight, chunky toy-like proportions, soft rounded
-> corners. Outlines kept hairline-thin in a soft muted slate, never black and
-> never heavy. Saturated riso inks: warm cream paper #FAF6EA, water blue
-> #A9CFD2, soft peach #E4C0A0, sage green #C3D3C3, warm sand #DCCFAE, plenty of
-> deep teal #26706C. Flat two-tone shading where the shadow tone is a
-> warmer tint of the object's own ink, never grey. Fine subtle halftone texture
-> on small areas only, most surfaces left as clean flat colour. All fills in the
-> bright upper half of the value range, no large dark areas anywhere. Warm cream
-> light washing in from the left, sunny, cheerful and inviting. `--ar 21:9
-> --stylize 350 --chaos 0 --no thick outlines, black outlines, heavy ink, coarse
-> dithering, dense halftone, dark halftone, dark shadows, grey shadows, olive,
-> olive green, dark green foliage, charcoal, near-black fills, muddy shading,
-> low-key lighting, dim, blank screens, black screens, off screens, border,
-> frame, margin, caption, credit line, signature, text, lettering, gibberish
-> text, faux lettering, scribbles, labels, numbers, logos, watermark, people,
-> faces, photorealism, 3D render, technical drawing, blueprint, CAD,
-> ruler-straight lines, architectural elevation, perspective grid, gloss, neon,
-> bloom, lens flare, grey, greyscale, desaturated, washed out, drab, dull,
-> sepia, gloomy, dusty, abandoned, decay, e-waste`
-
-Midjourney needs the warmth spelled out. Left to its defaults it returns a
-cold, washed-out, half-empty frame full of dead grey hardware. What counters it:
-
-- **No `--style raw`.** Raw strips exactly the charm this style needs. Default
-  mode at `--stylize 250` is warmer; `--chaos 0` makes the four grid variants
-  converge so you're choosing a composition rather than rolling dice.
-- **Don't stack desaturators.** `pastel` + `muted` + `soft` + `low contrast`
-  compound into grey. Say `saturated riso inks`, keep the palette hexes, and
-  put `grey, greyscale, desaturated, washed out, drab` in `--no`.
-- **Assign colours to objects by name.** MJ won't spend a palette it isn't told
-  where to use — teal boards, sky-blue cables, peach disk boxes. Say
-  `plenty of` teal, not `tiny accents of`, or it disappears entirely.
-- **Fill the upper third.** "Generous negative space above the objects" reads
-  as abandonment at 21:9. Give it a pegboard, a shelf, a plant, a lit lamp.
-- **State the mood.** `cheerful`, `well-loved`, `cosy and inviting`, `every
-  screen lit`, and `gloomy, dusty, abandoned, decay, e-waste` in `--no`. A
-  "cramped workshop with tangled cables" is an e-waste pile to MJ.
-- **Pin the SHADOW tone, not just the palette.** This is the root of the
-  "depressing undercurrent" that survives every other fix. Palette hexes only
-  control the lit side; MJ chooses the second tone of "flat two-tone shading"
-  itself and always picks desaturated dark grey-olive, so every object gets a
-  muddy dark side. Write `the shadow tone is a warmer tint of the object's own
-  ink, never grey — halftone dots in coral pink and powder blue only`.
-- **Say `high-key` and constrain the value range.** `All fills in the bright
-  upper half of the value range, no large dark areas anywhere`, with `dark
-  shadows, grey shadows, charcoal, near-black fills, dark halftone, muddy
-  shading, low-key lighting, dim` in `--no`. Cheerful vs sad in flat
-  illustration is mostly value distribution and shadow hue, not palette.
-- **Every screen must be explicitly lit and coloured**, or MJ fills CRTs
-  near-black: `every screen switched on and filled with a flat glowing field of
-  coral pink or mint green`, plus `blank screens, off screens` in `--no`.
-- **Foliage ignores hexes.** Even `drawn in flat sage green #C3D3C3` comes back
-  naturalistic dark olive and becomes the darkest mass in frame. Use one plant,
-  describe it by shape (`simple rounded leaves in flat pale sage`), and exclude
-  `olive, olive green, dark green foliage`.
-- **Coarse dither and heavy outlines are the last two dark masses.** Dithering
-  over large areas lowers apparent value everywhere, so use `fine subtle
-  halftone texture on small areas only, most surfaces left as clean flat
-  colour` and exclude `coarse dithering, dense halftone`. Likewise drop the
-  `#1F2E2B` hex from the outline clause — the token anchors MJ to near-black
-  and it draws the line thick, doubling it in vents and pegboard holes. Say
-  `outlines hairline-thin in a soft muted slate, never black and never heavy`
-  and exclude `thick outlines, black outlines, heavy ink`. Both cost some riso
-  character; there is no version that keeps heavy dither and reads sunny.
-- **If the mood survives all of the above, it's the subject, not the render.**
-  `beige`, `repair bench` and `case open` describe a repair-shop autopsy, and
-  the more faithfully MJ renders "beige 90s PC" the more it reads as
-  equipment disposal. Gemini escaped it because its cases were pink and blue
-  toys. Describe a workbench mid-project rather than a machine opened up.
-- **`seen straight on` produces a technical elevation** — ruler-straight uniform
-  hairlines, dimensionally accurate cases, zero charm. Use `gentle
-  three-quarter view` plus `loose hand-inked outlines with slightly wobbly
-  varying line weight, chunky toy-like proportions, soft rounded corners`, and
-  exclude `technical drawing, blueprint, CAD, ruler-straight lines,
-  architectural elevation, perspective grid`. Superseded in practice: the ten
-  covers in `covers/` are all straight-on, and the flat elevation reads as
-  deliberate once the whole set shares it and every scene is dense with
-  objects. Consistency across the set does the work the three-quarter view was
-  meant to do.
-- **Colour the object bodies, not just the props.** The Gemini covers gave each
-  machine its own case colour (one pink, one powder blue, one sand). MJ leaves
-  every chassis beige and spends the palette on screens and small items, which
-  reads cold even with the right hexes. Name a body colour per object.
-- **`--stylize` is the charm dial.** 350 for hand-drawn wobble, 250 for tidier
-  work, ~100 only for flat vector. It spends the extra latitude on linework.
-- **Don't write `Studio Ghibli`.** It pulls painterly watercolour and anime
-  faces, both of which fight the flat riso print. `cosy children's picture
-  book` gets the warmth with no render-style collision.
-- **Never say `poster`.** With `packaging art` alongside it, MJ renders a
-  framed print: cream margin on all four sides plus a bottom caption bar full
-  of garbled faux-lettering. Say `full-bleed illustration ... filling the
-  entire canvas edge to edge` and put the whole `border, frame, margin, white
-  edge, caption, credit line, signature` family in `--no`. Killing the caption
-  bar removes most of the fake text as a side effect.
-- **Warm the largest surface.** MJ defaults the back wall to grey-blue, which
-  is the single coldest thing in frame because it has the most area. Name it:
-  `warm cream and pale peach back wall`.
-- **Pin organic objects to a hex.** Houseplants and wood come out
-  naturalistic olive/brown unless told `drawn in flat sage green #C3D3C3`.
-- Prose negatives are ignored — "no glow" reads as *glow*. Everything goes
-  after `--no`. Note `glow` itself can't go there: it kills the lit screens and
-  the lamp. Use `bloom, lens flare` instead.
-- `--ar` is mandatory; MJ will not infer the frame from "wide 2:1 landscape
-  composition", so drop that clause from the prose.
-- Style consistency across covers comes from `--sref <url of an existing cover>
-  --sw 100`, not from adjectives — point it at one of the ten in `covers/`,
-  which are all `--sref`-locked to each other. Drop `--sw` to ~60 if it starts
-  copying the reference layout instead of its style.
-- Generate at 21:9 and the tiles show it uncropped; only the post header crops,
-  and it crops vertically, not horizontally. The current set is 3376×1440
-  (2.34:1) straight out of MJ, which crops cleanly.
-
-Subjects that work in this style: a cluttered 90s desk; a lone server rack; a
-bench of half-disassembled machines; stacked marked-up printouts; cassette
-tapes and minidiscs; a keyboard from directly above; cables running off-frame.
-
-Getting images off a phone: `python3 tools/upload_server.py 8787 uploads`
-serves a mobile upload form on the tailnet at
-`http://lucas-server.axolotl-major.ts.net:8787/`. Files land in `uploads/`
-(gitignored); slug-rename it into `covers/` at 2400 wide, then copy it into the
-post bundle as `cover.png` and add the `cover:` frontmatter. Kill the server
-afterwards.
+  `Llms`; every surface goes through `_partials/func/tagname.html`.
+- Elsewhere links: `[[params.social]]` in `hugo.toml` (`name`, `url`, `icon`).
+  Turn the module on for a page with `social: true`. `mailto:` entries become
+  the address row; everything else becomes an icon cell. Icons live in
+  `_partials/icon.html`: GitHub and Letterboxd are
+  [Simple Icons](https://simpleicons.org/) (CC0); LinkedIn and the envelope are
+  [Bootstrap Icons](https://icons.getbootstrap.com/) (MIT) — Simple Icons
+  dropped the LinkedIn mark on trademark request. LinkedIn renders at 16px
+  against the others' 18px: a solid square carries more ink and reads a size
+  larger at matched dimensions.
+- Feed: `layouts/home.rss.xml`. Posts only, full `.Content`. Hugo's built-in
+  RSS enumerates every regular page, so About / Archive / Search were showing
+  up as items.
 
 ## Gotchas
 
@@ -401,7 +274,12 @@ afterwards.
 - `hardWraps = true` is **deliberate** — it is what makes one-line-per-sentence
   staccato passages render as written. The cost is that any hard-wrapped
   paragraph renders with `<br>` at each source newline, so **write markdown one
-  long line per paragraph**. Do not reflow content files at 80 columns.
+  long line per paragraph**. Do not reflow content files at 80 columns. It also
+  means the sunk initial is beside three short lines rather than three full
+  ones; that staircase is intentional, not a bug.
+- `::first-line` is unusable for a small-caps opening: it styles the *rendered*
+  line, so a narrow viewport cuts it mid-sentence. If that treatment is ever
+  wanted, wrap the first sentence in a span with a `replaceRE` over `.Content`.
 - Cascade uses `[cascade.target]`, not `[cascade._target]` — the underscore
   spelling was deprecated in 0.156 and warns on every build.
 - `.Language.LanguageCode` was deprecated in 0.158; use `.Language.Locale`.

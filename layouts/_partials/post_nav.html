@@ -4,14 +4,12 @@
   {{- with $next }}
   <a class="post-nav__item" href="{{ .RelPermalink }}">
     <span class="u-micro post-nav__dir">Newer</span>
-    <span class="post-nav__media">{{ partial "poster.html" (dict "page" . "variant" "mini") }}</span>
     <span class="post-nav__title">{{ .Title }}</span>
   </a>
   {{- end }}
   {{- with $prev }}
   <a class="post-nav__item post-nav__item--prev" href="{{ .RelPermalink }}">
     <span class="u-micro post-nav__dir">Older</span>
-    <span class="post-nav__media">{{ partial "poster.html" (dict "page" . "variant" "mini") }}</span>
     <span class="post-nav__title">{{ .Title }}</span>
   </a>
   {{- end }}

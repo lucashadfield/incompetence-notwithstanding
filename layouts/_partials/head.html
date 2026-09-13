@@ -12,14 +12,23 @@
 <meta name="robots" content="index, follow">
 {{- end }}
 
-{{- /* ── fonts: self-hosted, preloaded ────────────────────────────────── */}}
-{{- $grotesk := resources.Get "fonts/space-grotesk-latin.woff2" }}
+{{- /* ── fonts: self-hosted, preloaded ─────────────────────────────────────
+       Spectral for body copy, Cormorant Garamond for display, Space Mono for
+       code only. The ornate initials are 26 single-glyph files declared in
+       assets/css/parts/05-initials.css, not here. */}}
+{{- $body := resources.Get "fonts/spectral-normal.woff2" }}
+{{- $bodyIt := resources.Get "fonts/spectral-italic.woff2" }}
+{{- $disp := resources.Get "fonts/cormorant-garamond-normal.woff2" }}
+{{- $dispIt := resources.Get "fonts/cormorant-garamond-italic.woff2" }}
 {{- $mono := resources.Get "fonts/space-mono-latin.woff2" }}
 {{- $monoBold := resources.Get "fonts/space-mono-latin-700.woff2" }}
-<link rel="preload" href="{{ $grotesk.RelPermalink }}" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="{{ $mono.RelPermalink }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ $body.RelPermalink }}" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{ $disp.RelPermalink }}" as="font" type="font/woff2" crossorigin>
 <style>
-  @font-face{font-family:"Space Grotesk";src:url({{ $grotesk.RelPermalink }}) format("woff2");font-weight:300 700;font-style:normal;font-display:swap}
+  @font-face{font-family:"Spectral";src:url({{ $body.RelPermalink }}) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+  @font-face{font-family:"Spectral";src:url({{ $bodyIt.RelPermalink }}) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+  @font-face{font-family:"Cormorant Garamond";src:url({{ $disp.RelPermalink }}) format("woff2");font-weight:300 700;font-style:normal;font-display:swap}
+  @font-face{font-family:"Cormorant Garamond";src:url({{ $dispIt.RelPermalink }}) format("woff2");font-weight:300 700;font-style:italic;font-display:swap}
   @font-face{font-family:"Space Mono";src:url({{ $mono.RelPermalink }}) format("woff2");font-weight:400;font-style:normal;font-display:swap}
   @font-face{font-family:"Space Mono";src:url({{ $monoBold.RelPermalink }}) format("woff2");font-weight:700;font-style:normal;font-display:swap}
 </style>
@@ -41,22 +50,15 @@
 <meta property="og:description" content="{{ $desc | plainify | chomp }}">
 <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
 <meta property="og:url" content="{{ .Permalink }}">
-{{- /* Social card: a 1200×630 JPEG cropped from the 21:9 cover. Never link
-       the original — the source PNGs are ~2.5 MB and no scraper wants that. */}}
-{{- with partial "func/cover_resource.html" . }}
-{{- $card := .Fill "1200x630 jpg q85 Center" }}
-<meta property="og:image" content="{{ $card.Permalink }}">
-<meta property="og:image:width" content="{{ $card.Width }}">
-<meta property="og:image:height" content="{{ $card.Height }}">
-<meta property="og:image:alt" content="{{ with $.Params.cover }}{{ .alt | default $.Title }}{{ else }}{{ $.Title }}{{ end }}">
-<meta name="twitter:card" content="summary_large_image">
-{{- else }}
+{{- /* No og:image. The site has no cover art any more, so there is nothing to
+       crop a 1200×630 card from and link previews are text-only. A generated
+       type-only card would be the alternative if that ever matters. */}}
 <meta name="twitter:card" content="summary">
-{{- end }}
 {{- with .Date }}<meta property="article:published_time" content="{{ .Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
 
-<meta name="theme-color" content="#FAF6EA">
-{{- /* favicon: the wordmark mark itself — see assets/img/favicon.svg */}}
+<meta name="theme-color" content="#FCFAF4">
+{{- /* favicon: the Goudy Initialen "I" block — see README, and the PNG
+       fallbacks are rasterised from the same SVG */}}
 {{- with resources.Get "img/favicon.svg" }}
 <link rel="icon" href="{{ .RelPermalink }}" type="image/svg+xml">
 {{- end }}

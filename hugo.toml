@@ -37,29 +37,24 @@ summaryLength = 30
     llms = "LLMs"
     rl = "RL"
     ml = "ML"
-  # ── elsewhere: rendered by the {{< social >}} shortcode ─────────────────────
-  # tint is one of the five cover-art palette families; it is the hard offset
-  # shadow on hover. No brand colours — four foreign palettes would swamp the page.
+  # ── elsewhere: rendered into /about/ by _partials/social.html ──────────────
+  # No brand colours: a cell washes and the mark turns rubric on hover.
   [[params.social]]
     name = "Email"
     url = "mailto:lucas@hadfield.dev"
     icon = "mail"
-    tint = "sage"
   [[params.social]]
     name = "GitHub"
     url = "https://github.com/lucashadfield"
     icon = "github"
-    tint = "stone"
   [[params.social]]
     name = "LinkedIn"
     url = "https://linkedin.com/in/lucashadfield"
     icon = "linkedin"
-    tint = "mist"
   [[params.social]]
     name = "Letterboxd"
     url = "https://letterboxd.com/lhad"
     icon = "letterboxd"
-    tint = "peach"
   # ── search (fuse.js) ────────────────────────────────────────────────────────
   [params.fuseOpts]
     isCaseSensitive = false
@@ -77,17 +72,6 @@ summaryLength = 30
   [markup.goldmark.renderer]
     unsafe = true
     hardWraps = true
-
-# Keep original cover.png files out of public/: every reference goes through a
-# resized derivative, and unreferenced resources are not published. Covers both
-# posts and /about/, which uses the same page-bundle cover convention.
-[[cascade]]
-  [cascade.build]
-    publishResources = false
-  [cascade.target]
-    # `/about/**` does NOT match `/about/` — `**` needs a following segment, so
-    # a root-level leaf bundle has to be named without one.
-    path = "{/posts/**,/about}"
 
 [menu]
   [[menu.main]]

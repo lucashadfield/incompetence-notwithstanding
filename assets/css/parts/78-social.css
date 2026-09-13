@@ -3,9 +3,9 @@
    beneath — the same hairline-divided-cell idiom as the header's icon buttons,
    but drawn as a single unit rather than four separate chips.
 
-   Lives in the right-hand column of a standalone page on wide screens and
-   reflows under the text below 1000px. No brand colours: each mark's cell
-   fills with its own palette tint on hover, and that is the only colour.
+   Sits under the article, centred, capped at 17rem. No brand colours and no
+   palette tints any more — the five cover-art tints went with the covers, so
+   a cell simply washes and the mark turns rubric on hover.
    ---------------------------------------------------------------------- */
 .social__label { margin-bottom: 0.7rem; }
 
@@ -27,11 +27,11 @@
   text-decoration: none;
   transition: background 0.2s var(--ease), color 0.2s var(--ease);
 }
-.social__mail:hover { background: var(--wash); color: var(--accent); }
+.social__mail:hover { background: var(--wash); color: var(--rubric); }
 .social__mail-icon { display: grid; place-items: center; flex-shrink: 0; }
 .social__mail-addr {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   line-height: 1.2;
   letter-spacing: -0.01em;
   min-width: 0;
@@ -57,14 +57,16 @@
   color: var(--ink);
   transition: background 0.2s var(--ease), color 0.2s var(--ease);
 }
-.social__marks a:hover { background: var(--tint, var(--mist)); }
+.social__marks a:hover { background: var(--wash); color: var(--rubric); }
 .social__marks a:focus-visible { outline-offset: -3px; }
 
 /* ── placement ────────────────────────────────────────────────────────────
    Under the article. Capped so a three-cell strip doesn't stretch the full
    reading measure and go limp. */
 .social {
-  margin-top: clamp(0.5rem, 1.5vw, 1rem);
+  margin: clamp(0.5rem, 1.5vw, 1rem) auto 0;
   padding-bottom: clamp(3rem, 6vw, 5rem);
   max-width: 17rem;
+  text-align: center;
 }
+.social__label { text-align: center; }

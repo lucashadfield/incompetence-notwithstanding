@@ -1,0 +1,50 @@
+/* ── contents list ────────────────────────────────────────────────────────
+   What the illustrated tile grid used to be. Every index — home, a tag page,
+   search results — is now a centred list of entries numbered in roman, with
+   the title in the display face and the summary beneath.
+   ---------------------------------------------------------------------- */
+.contents { padding-block: clamp(1.5rem, 3vw, 2.25rem) clamp(2.5rem, 5vw, 4rem); }
+.contents__label {
+  text-align: center;
+  padding-bottom: 1.1rem;
+}
+
+.entry {
+  display: block;
+  text-align: center;
+  padding-block: clamp(1.25rem, 2.5vw, 1.6rem);
+  border-top: 1px solid var(--rule-2);
+  transition: background 0.25s var(--ease);
+}
+.entry:last-child { border-bottom: 1px solid var(--rule-2); }
+.entry:hover { background: var(--wash); }
+
+.entry__no {
+  display: block;
+  font-size: var(--t-micro);
+  letter-spacing: var(--tracking-micro);
+  color: var(--rubric);
+  font-variant-numeric: lining-nums;
+}
+.entry__title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 1.25rem + 0.7vw, 1.85rem);
+  line-height: 1.18;
+  margin-top: 0.3rem;
+  max-width: 30ch;
+  margin-inline: auto;
+  text-wrap: balance;
+}
+.entry:hover .entry__title { color: var(--rubric); }
+.entry__desc {
+  display: block;
+  margin-top: 0.5rem;
+  color: var(--ink-2);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  max-width: 46ch;
+  margin-inline: auto;
+}
+.entry__meta { display: block; margin-top: 0.65rem; }

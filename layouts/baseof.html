@@ -4,6 +4,7 @@
   {{- partial "head.html" . }}
 </head>
 <body class="page--{{ .Kind }}{{ with .Layout }} layout--{{ . }}{{ end }}">
+  <span id="top-of-page"></span>
   <a class="skip-link u-micro" href="#content">Skip to content</a>
   {{ partial "header.html" . }}
   <main id="content" class="main">

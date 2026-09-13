@@ -1,35 +1,26 @@
-/* ── homepage hero ────────────────────────────────────────────────────── */
+/* ── homepage ─────────────────────────────────────────────────────────── */
 .hero {
-  padding-top: clamp(2rem, 4.5vw, 3.5rem);
-  padding-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
-  border-bottom: 1px solid var(--rule);
+  padding-block: clamp(2.25rem, 5vw, 3.5rem) clamp(1.5rem, 3vw, 2.25rem);
+  text-align: center;
+  border-bottom: 1px solid var(--rule-2);
 }
-
 .hero__title {
   font-family: var(--font-display);
   font-weight: 500;
   font-size: var(--t-display);
-  line-height: 1.08;
-  letter-spacing: var(--tracking-display);
-  max-width: 31ch;
+  line-height: 1.2;
+  max-width: 24ch;
+  margin-inline: auto;
   text-wrap: balance;
 }
-
-.hero__dim {
-  color: var(--ink-3);
-}
-
+.hero__dim { color: var(--ink-3); }
 .hero__meta {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
-  gap: 0.8rem;
-  margin-top: clamp(1.1rem, 2vw, 1.6rem);
+  gap: 0.4rem 0.9rem;
+  margin-top: clamp(1rem, 2vw, 1.4rem);
 }
-.hero__meta a {
-  text-decoration: underline;
-  text-decoration-color: var(--rule-strong);
-  text-underline-offset: 4px;
-}
-
-/* the tiles start straight after the hero — no "Latest" section heading */
+.hero__meta a { border-bottom: 1px solid var(--rule); }
+.hero__meta a:hover { border-bottom-color: var(--rubric); }

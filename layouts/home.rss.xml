@@ -3,8 +3,9 @@
     1. the default enumerates every regular page, so About / Archive / Search
        were showing up as feed items;
     2. it ships only .Description, throwing away the whole post;
-    3. it carries no art, which on this site is most of the point.
-  Posts only, full content, cover as both an <enclosure> and the lead image.
+    3. it used to carry the cover art as an <enclosure> and lead image; there
+       is no cover art any more, so items are text only.
+  Posts only, full content.
 */ -}}
 {{- $pages := where site.RegularPages "Section" "in" site.Params.mainSections -}}
 {{- $limit := site.Config.Services.RSS.Limit -}}
@@ -28,9 +29,6 @@
     {{- end }}
     <atom:link href="{{ .Permalink }}" rel="self" type="application/rss+xml" />
     {{- range $pages }}
-    {{- $cover := partial "func/cover_resource.html" . }}
-    {{- $card := "" }}
-    {{- with $cover }}{{ $card = .Fill "1200x630 jpg q85 Center" }}{{ end }}
     {{- /* root-relative asset URLs are meaningless in a feed reader */}}
     {{- $body := .Content | replaceRE `(src|href)="(/[^/][^"]*)"` (printf `$1="%s$2"` $base) }}
     <item>
@@ -43,10 +41,7 @@
       <category>{{ . }}</category>
       {{- end }}
       <description>{{ .Description | default (.Summary | plainify) | chomp }}</description>
-      {{- with $card }}
-      <enclosure url="{{ .Permalink }}" length="{{ len .Content }}" type="image/jpeg" />
-      {{- end }}
-      <content:encoded><![CDATA[{{ with $card }}<p><img src="{{ .Permalink }}" alt="{{ $.Title }}" width="{{ .Width }}" height="{{ .Height }}"></p>{{ end }}{{ $body }}]]></content:encoded>
+      <content:encoded><![CDATA[{{ $body }}]]></content:encoded>
     </item>
     {{- end }}
   </channel>

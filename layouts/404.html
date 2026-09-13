@@ -1,10 +1,10 @@
 {{ define "main" }}
 <section class="notfound">
-  <div class="notfound__art dither" aria-hidden="true"></div>
   <div class="wrap notfound__body">
     <p class="u-micro">Error 404</p>
     <h1 class="notfound__title">Nothing at this address.</h1>
     <p class="notfound__text">The page moved, or never existed. Both happen here.</p>
+    <div class="orn orn--head" aria-hidden="true">{{ partial "ornament.html" . }}</div>
     <p class="u-micro"><a href="{{ "/" | relURL }}">Back to the homepage</a> <span class="dot" aria-hidden="true"></span> <a href="{{ "/search/" | relURL }}">Search</a></p>
   </div>
 </section>

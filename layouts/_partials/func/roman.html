@@ -1,0 +1,13 @@
+{{- /*
+  Roman numeral for an integer 1–99, for the contents list. Hugo has no such
+  function, and a contents page numbered 1, 2, 3 looks like a search result.
+  Anything outside the range falls back to the arabic number.
+*/ -}}
+{{- $n := . | int -}}
+{{- $out := printf "%d" $n -}}
+{{- if and (ge $n 1) (lt $n 100) -}}
+  {{- $tens := slice "" "X" "XX" "XXX" "XL" "L" "LX" "LXX" "LXXX" "XC" -}}
+  {{- $ones := slice "" "I" "II" "III" "IV" "V" "VI" "VII" "VIII" "IX" -}}
+  {{- $out = printf "%s%s" (index $tens (div $n 10)) (index $ones (mod $n 10)) -}}
+{{- end -}}
+{{- return $out -}}

@@ -1,11 +1,8 @@
 {{ define "main" }}
-{{- $hasCover := partial "func/cover_resource.html" . }}
 <article class="post">
-  {{- if $hasCover }}
-  <div class="post__hero">
-    {{ partial "poster.html" (dict "page" . "variant" "hero" "loading" "eager") }}
+  <div class="post__runhead wrap">
+    <p class="runhead u-micro"><span>{{ site.Title }}</span><span>{{ .Title }}</span></p>
   </div>
-  {{- end }}
 
   <header class="post__head wrap">
     <p class="post__kicker u-micro">
@@ -19,23 +16,24 @@
     </p>
     <h1 class="post__title">{{ .Title }}</h1>
     {{- with .Description }}<p class="post__standfirst">{{ . }}</p>{{ end }}
-    <hr class="rule rule--accent">
+    <div class="orn orn--head" aria-hidden="true">{{ partial "ornament.html" . }}</div>
   </header>
 
   <div class="post__main wrap">
-    <div class="prose post__body">
+    {{- /* --dropcap turns on the Goudy initial; see 05-initials.css */}}
+    <div class="prose prose--dropcap post__body">
       {{ .Content }}
     </div>
   </div>
 
   <footer class="post__foot wrap">
-    <hr class="rule">
     <p class="u-micro post__backlinks">
       <a href="{{ "/archives/" | relURL }}">All posts</a>
       <span class="dot" aria-hidden="true"></span>
       <a href="#top-of-page" data-to-top>Back to top</a>
     </p>
     {{- if site.Params.showPostNav }}{{ partial "post_nav.html" . }}{{ end }}
+    <div class="folio u-micro" aria-hidden="true"></div>
   </footer>
 </article>
 {{ end }}

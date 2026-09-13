@@ -1,12 +1,5 @@
 {{ define "main" }}
-{{- $hasCover := partial "func/cover_resource.html" . }}
 <article class="page-single">
-  {{- if $hasCover }}
-  <div class="post__hero">
-    {{ partial "poster.html" (dict "page" . "variant" "hero" "loading" "eager") }}
-  </div>
-  {{- end }}
-
   <div class="page-single__grid wrap">
     <header class="page-single__head">
       <p class="u-micro">{{ site.Title }}</p>

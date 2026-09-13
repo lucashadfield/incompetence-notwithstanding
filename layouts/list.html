@@ -9,10 +9,10 @@
     <hr class="rule rule--accent">
   </header>
 
-  <div class="tiles">
+  <div class="contents">
     {{- $total := len .Pages }}
     {{- range $i, $p := .Pages }}
-    {{ partial "tile.html" (dict "page" $p "variant" "tile" "index" (sub $total $i)) }}
+    {{ partial "entry.html" (dict "page" $p "index" (sub $total $i)) }}
     {{- end }}
   </div>
 </section>

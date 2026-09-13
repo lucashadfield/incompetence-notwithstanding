@@ -1,74 +1,61 @@
 /* ── design tokens ─────────────────────────────────────────────────────────
-   One typeface family throughout: Space Grotesk for everything, Space Mono
-   (its sibling) for labels, numbers and code. No serif/sans pairing.
+   The book setting. Spectral for body copy, Cormorant Garamond for display,
+   Space Mono for code only. No sans anywhere.
 
-   Palette: sampled from the ten cover illustrations in covers/ — pool teal,
-   sage, sand and peach on warm cream, over a deep slate-green ink. The single
-   accent is the saturated teal of the poolside cover (#26706C, 5.4:1 on
-   paper). No red anywhere: the art has none.
+   Two colours of ink, as a hand-press would have them: black for text and a
+   rubric red for structure — initials, kickers, ornaments, markers, rules.
+   Links get their own muted teal so they do not read as rubrication.
 
-   The logo mark is ink with an accent-teal offset behind it: a near-black chip
-   casting a coloured ghost. Solid accent made the header teal-on-teal, and a
-   terracotta chip on pale blue was too much colour for a 10px mark.
+   This replaced the pastel/teal system that was sampled from the cover
+   illustrations. There are no illustrations any more, so there was no longer
+   anything for that palette to agree with.
    ------------------------------------------------------------------------ */
 :root {
-  /* surfaces — warm cream a touch above the cover art's own ground (#F0EDD6),
-     so illustrations read as slightly deeper panels on the page */
-  --paper: #FAF6EA;
-  --paper-raised: #FFFDF6;
-  --sunken: #EFEADA;
+  /* surfaces */
+  --paper: #FCFAF4;
+  --paper-raised: #FFFDF7;
+  --paper-2: #F7F3E9;      /* masthead / footer band */
+  --sunken: #F2EEE4;
+  --wash: #F7F2E6;         /* hover */
 
-  /* tints for tiles, tags, hovers — the five recurring colour families in
-     the covers: water/sky, cushion peach, plant sage, paper sand, stone */
-  --mist: #A9CFD2;
-  --peach: #E4C0A0;
-  --sage: #C3D3C3;
-  --sand: #DCCFAE;
-  --stone: #C2C6B2;
-  --wash: #EEF1E7;        /* faintest sage — hover and highlight state */
+  /* ink */
+  --ink: #1E1C1A;
+  --ink-2: #4B4741;
+  --ink-3: #8C857B;
 
-  /* accent + ink */
-  --accent: #26706C;
-
-  /* logo mark — ink chip with an accent ghost behind it */
-  --mark: #1F2E2B;
-  --mark-shadow: #26706C;
-  --ink: #1F2E2B;
-  --ink-2: #4E635E;
-  --ink-3: #8A9A94;
+  /* the two accents */
+  --rubric: #8A2F1F;       /* structure: initials, kickers, ornaments, rules */
+  --accent: var(--rubric); /* legacy alias — everything structural uses it */
+  --link: #2F5D57;         /* running text links only */
 
   /* lines */
-  --rule: color-mix(in srgb, var(--ink) 14%, transparent);
-  --rule-strong: color-mix(in srgb, var(--ink) 30%, transparent);
+  --rule: color-mix(in srgb, var(--ink) 18%, transparent);
+  --rule-2: color-mix(in srgb, var(--ink) 10%, transparent);
+  --rule-strong: color-mix(in srgb, var(--ink) 32%, transparent);
 
   /* type */
-  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Spectral", Georgia, "Times New Roman", serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
   --font-mono: "Space Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --font-display: var(--font-sans);
 
-  --t-micro: 0.625rem;
-  --t-small: 0.75rem;
-  --t-body: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
-  --t-lead: clamp(1rem, 0.95rem + 0.3vw, 1.15rem);
-  --t-h3: clamp(1rem, 0.97rem + 0.2vw, 1.1rem);
-  --t-h2: clamp(1.2rem, 1.05rem + 0.55vw, 1.5rem);
-  --t-h1: clamp(1.7rem, 1.3rem + 1.7vw, 2.6rem);
-  --t-display: clamp(1.8rem, 1.3rem + 2.2vw, 2.9rem);
-  --tracking-micro: 0.14em;
-  --tracking-display: -0.035em;
+  --t-micro: 0.72rem;
+  --t-small: 0.85rem;
+  --t-body: 1.0625rem;
+  --t-lead: 1.075rem;
+  --t-h3: 1.25rem;
+  --t-h2: 1.55rem;
+  --t-h1: clamp(2.1rem, 1.5rem + 2.4vw, 3.1rem);
+  --t-display: clamp(1.8rem, 1.3rem + 2vw, 2.6rem);
+  --tracking-micro: 0.17em;      /* every label: uppercase serif, wide */
+  --tracking-display: 0;         /* the display face is not tracked in */
 
   /* space + shape */
-  --wrap: 1240px;
-  /* ONE reading measure, everywhere. The article wrap and the prose cap are
-     the same number, so any rule drawn at wrap width lines up exactly with
-     the text column under it. Pages that keep the wide 1240px wrap (home,
-     lists, archive) still cap their prose at this. */
-  --measure: 42rem;
-  --cover-ar: 21 / 9;     /* every cover crop, everywhere */
-  --gutter: clamp(1.25rem, 4.5vw, 3rem);
-  --header-h: 54px;
-  --radius: 0px;          /* square corners: nothing rounded anywhere */
-  --pixel: 4px;           /* the grid everything snaps to */
+  --wrap: 52rem;           /* masthead, footer, index pages */
+  --measure: 35rem;        /* the reading column */
+  --gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --header-h: auto;
+  --radius: 0px;
+  --pixel: 4px;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 
   color-scheme: light;
