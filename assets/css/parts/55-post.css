@@ -19,8 +19,6 @@
   gap: 0.15rem 0.45rem;
   color: var(--rubric);
 }
-.post__kicker a { border-bottom: 1px solid color-mix(in srgb, var(--rubric) 35%, transparent); }
-.post__kicker a:hover { border-bottom-color: var(--rubric); }
 .post__kicker .dot { opacity: 0.5; }
 
 .post__title {

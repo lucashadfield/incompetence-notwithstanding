@@ -2,8 +2,6 @@
 <article class="post">
   <header class="post__head wrap">
     <p class="post__kicker u-micro">
-      <a href="{{ "/archives/" | relURL }}">Archive</a>
-      <span class="dot" aria-hidden="true"></span>
       <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format site.Params.dateFormat }}</time>
       {{- if site.Params.showReadingTime }}<span class="dot" aria-hidden="true"></span><span>{{ .ReadingTime }} min read</span>{{ end }}
       {{- with .Params.tags }}<span class="dot" aria-hidden="true"></span>
