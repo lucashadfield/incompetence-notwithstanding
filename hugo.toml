@@ -23,7 +23,7 @@ summaryLength = 30
   author = "Lucas Hadfield"
   since = 2026
   # homepage statement, set large
-  intro = "Writing about wheedling LLMs, mostly"
+  intro = "Writing on wheedling LLMs, mostly"
   # ── behaviour ───────────────────────────────────────────────────────────────
   mainSections = ["posts"]
   dateFormat = "2 Jan 2006"
