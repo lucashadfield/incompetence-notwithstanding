@@ -20,8 +20,11 @@
 .hero__title {
   font-family: var(--font-display);
   font-weight: 500;
-  font-size: var(--t-h1);
-  line-height: 1.15;
+  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rubric);
   /* no measure and no balancing: the column width and the float are the only
      things that should decide where this breaks */
   text-wrap: pretty;
