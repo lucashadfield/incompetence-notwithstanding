@@ -1,11 +1,10 @@
 /* ── contents list ────────────────────────────────────────────────────────
    What the illustrated tile grid used to be. Every index — home, a tag page —
    is a centred list of framed plates numbered in roman: hairline double frame,
-   a vine flourish in each corner in the spirit of the Goudy initial, the title
-   in the display face.
+   title in the display face.
 
-   Hover darkens the whole plate to --sunken and drops the frame and corners to
-   grey, moving the colour onto the title. A lift to --paper-raised was the
+   Hover darkens the whole plate to --sunken and drops the frame to grey,
+   moving the colour onto the title. A lift to --paper-raised was the
    first attempt and was invisible: it is a 3% step off the page colour.
    ---------------------------------------------------------------------- */
 .contents { padding-block: clamp(1.1rem, 2vw, 1.6rem) clamp(2.5rem, 5vw, 4rem); }
@@ -30,7 +29,7 @@
 }
 
 /* the frame: an outer hairline and an inner one 4px inside it, drawn on one
-   element so the corner flourishes can sit on top of both */
+   element */
 .entry__frame {
   position: absolute;
   inset: 0;
@@ -47,22 +46,6 @@
 }
 .entry:hover .entry__frame { border-color: color-mix(in srgb, var(--ink) 30%, transparent); }
 .entry:hover .entry__frame::after { border-color: color-mix(in srgb, var(--ink) 14%, transparent); }
-
-/* corners: one SVG placed four times and rotated, over the frame rules rather
-   than interrupting them */
-.entry__corner {
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  color: var(--rubric);
-  transition: color 0.3s var(--ease);
-}
-.entry__corner-svg { width: 100%; height: 100%; }
-.entry__corner--tl { top: -1px; left: -1px; }
-.entry__corner--tr { top: -1px; right: -1px; transform: rotate(90deg); }
-.entry__corner--br { bottom: -1px; right: -1px; transform: rotate(180deg); }
-.entry__corner--bl { bottom: -1px; left: -1px; transform: rotate(270deg); }
-.entry:hover .entry__corner { color: var(--ink-3); }
 
 .entry__no {
   position: relative;
@@ -104,6 +87,5 @@
 @media (max-width: 520px) {
   /* the flourishes are 40px on a ~290px-wide plate below this width: they stop
      framing the text and start crowding it */
-  .entry__corner { display: none; }
   .entry { padding-inline: 1.25rem; }
 }
